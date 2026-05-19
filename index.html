@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DECOI - Departamento de Controle Interno | AIC/DECOI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="progress-bar"></div>
+    <div id="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">14</span></div>
+    
+    <nav id="nav-controls">
+        <button id="btn-prev" aria-label="Slide anterior">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button id="btn-next" aria-label="Próximo slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+    </nav>
+
+    <button id="btn-overview" aria-label="Visão geral">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+        </svg>
+    </button>
+
+    <div id="overview-panel" class="hidden">
+        <div class="overview-grid"></div>
+    </div>
+
+    <main id="presentation">
+        <!-- Slide 1: Title -->
+        <section class="slide slide--title active" data-slide="1">
+            <div class="slide__bg">
+                <img src="images/slide1_img0.jpg" alt="" aria-hidden="true" role="presentation" class="slide__bg-img">
+                <div class="slide__overlay"></div>
+            </div>
+            <div class="slide__content">
+                <div class="title-card">
+                    <div class="title-card__badge">AIC/DECOI</div>
+                    <h1 class="title-card__heading">Departamento de<br>Controle Interno</h1>
+                    <div class="title-card__divider"></div>
+                    <p class="title-card__date">Maio / 2026</p>
+                    <p class="title-card__classification">Classificação: Ostensivo &bull; Unidade Gestora: AIC/DECOI</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: Estrutura -->
+        <section class="slide slide--structure" data-slide="2">
+            <div class="slide__bg">
+                <img src="images/slide2_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title">Estrutura AIC/DECOI</h2>
+                <div class="org-chart">
+                    <div class="org-card org-card--main">
+                        <div class="org-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/><path d="M9 9h1M14 9h1M9 13h1M14 13h1"/></svg>
+                        </div>
+                        <h3>AIC/DECOI</h3>
+                        <p>Departamento de Controle Interno</p>
+                    </div>
+                    <div class="org-chart__branches">
+                        <div class="org-card" data-delay="200">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 5-5"/><circle cx="20" cy="7" r="1.5"/></svg>
+                            </div>
+                            <h4>GECOI</h4>
+                            <p>Controle Interno</p>
+                        </div>
+                        <div class="org-card" data-delay="400">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3L2 8l10 5 10-5-10-5z"/><path d="M2 16l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                            </div>
+                            <h4>GECONF</h4>
+                            <p>Conformidade</p>
+                        </div>
+                        <div class="org-card" data-delay="600">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                            </div>
+                            <h4>GDICE</h4>
+                            <p>Dados e Inteligência</p>
+                        </div>
+                        <div class="org-card" data-delay="800">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+                            </div>
+                            <h4>UCON</h4>
+                            <p>Controle</p>
+                        </div>
+                        <div class="org-card" data-delay="1000">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v16H4z"/><path d="M4 9h16M4 14h16M9 4v16M14 4v16"/></svg>
+                            </div>
+                            <h4>GEMOD</h4>
+                            <p>Risco de Modelos</p>
+                        </div>
+                    </div>
+                    <div class="org-stats">
+                        <div class="stat-item"><span class="stat-number">13</span><span class="stat-label">Colaboradores</span></div>
+                        <div class="stat-item"><span class="stat-number">3</span><span class="stat-label">Estagiários</span></div>
+                        <div class="stat-item"><span class="stat-number">2</span><span class="stat-label">Jovens Aprendizes</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Políticas -->
+        <section class="slide slide--policies" data-slide="3">
+            <div class="slide__bg">
+                <img src="images/slide3_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--gradient"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title">Políticas Corporativas</h2>
+                <div class="policies-grid">
+                    <div class="policy-card" data-delay="100">
+                        <div class="policy-card__acronym">PCON</div>
+                        <p>Política de Controle Interno e Conformidade</p>
+                        <span class="policy-card__period">2024–2028</span>
+                    </div>
+                    <div class="policy-card" data-delay="200">
+                        <div class="policy-card__acronym">PCCI</div>
+                        <p>Política de Controle de Conflitos de Interesses Institucionais</p>
+                        <span class="policy-card__period">2025–2029</span>
+                    </div>
+                    <div class="policy-card" data-delay="300">
+                        <div class="policy-card__acronym">PCBI</div>
+                        <p>Política de Barreira de Informações</p>
+                        <span class="policy-card__period">2024–2028</span>
+                    </div>
+                    <div class="policy-card" data-delay="400">
+                        <div class="policy-card__acronym">PCGRiM</div>
+                        <p>Política de Risco de Modelo</p>
+                        <span class="policy-card__period">2024–2025</span>
+                    </div>
+                    <div class="policy-card policy-card--wide" data-delay="500">
+                        <div class="policy-card__acronym">Manual</div>
+                        <p>Manual de Procedimento para Avaliação de Riscos de Modelos</p>
+                        <span class="policy-card__period">2024–2028</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: GECOI -->
+        <section class="slide slide--gecoi" data-slide="4">
+            <div class="slide__bg">
+                <img src="images/slide4_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Gerência de Controle Interno</h2>
+                    <div class="slide__subtitle-badge">GECOI</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A GECOI exerce papel central no fortalecimento do <strong>Ambiente de Controle Interno</strong>, tendo mandato da PCON*, por meio de monitoramento e avaliação contínuos.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p>Atuando em nível institucional, consolida indicadores e evidências para avaliar, de forma integrada, o funcionamento dos controles internos da organização.</p>
+                    </div>
+                    <div class="info-block" data-delay="600">
+                        <p>A atuação é complementar às atividades de Gestão do Risco Operacional (AIC/DEROP) relacionados ao mapeamento dos controles internos nos processos.</p>
+                    </div>
+                    <p class="footnote" data-delay="800">*Política Corporativa de Controle Interno e Conformidade</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: GECOI Frentes -->
+        <section class="slide slide--fronts" data-slide="5">
+            <div class="slide__bg slide__bg--light">
+                <div class="slide__overlay slide__overlay--subtle"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title slide__title--dark">Frentes Estratégicas — GECOI</h2>
+                <div class="fronts-layout">
+                    <div class="front-column">
+                        <h3 class="front-column__title">Frentes</h3>
+                        <div class="front-item" data-delay="100">
+                            <span class="front-item__bullet"></span>
+                            <span>Maturidade do SCI</span>
+                        </div>
+                        <div class="front-item" data-delay="200">
+                            <span class="front-item__bullet"></span>
+                            <span>Avaliação da Efetividade da PLDFT</span>
+                        </div>
+                        <div class="front-item" data-delay="300">
+                            <span class="front-item__bullet"></span>
+                            <span>Monitoramento do SCI (Torre de Controle)</span>
+                        </div>
+                        <div class="front-item" data-delay="400">
+                            <span class="front-item__bullet"></span>
+                            <span>Qualidade das Informações / CADOCs (Res Conj BCB 18)</span>
+                        </div>
+                        <div class="front-item" data-delay="500">
+                            <span class="front-item__bullet"></span>
+                            <span>Demandas Específicas</span>
+                        </div>
+                    </div>
+                    <div class="front-column">
+                        <h3 class="front-column__title">Plano de Trabalho</h3>
+                        <div class="front-detail" data-delay="200">Acompanhamento da evolução da Maturidade do SCI</div>
+                        <div class="front-detail" data-delay="300">Relatório de Avaliação e Acompanhamento da efetividade da PLDFT (RAAE)</div>
+                        <div class="front-detail" data-delay="400">Implementação da atividade de avaliação contínua da Qualidade da Informação prestada ao BCB</div>
+                        <div class="front-detail" data-delay="500">Estruturando o Monitoramento dos CADOCs (Tempestividade e Qualidade)</div>
+                        <div class="front-detail" data-delay="600">Design de fluxos de automação de dados com apoio dos Cientistas de dados</div>
+                        <div class="front-detail" data-delay="700">Fase piloto de monitoramento baseado em dados para identificação de situações atípicas</div>
+                        <div class="front-detail" data-delay="800">Evolução para criação sistematizada de indicadores de efetividade da PLDFT</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: GECONF -->
+        <section class="slide slide--geconf" data-slide="6">
+            <div class="slide__bg">
+                <img src="images/slide6_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Gerência de Conformidade</h2>
+                    <div class="slide__subtitle-badge">GECONF</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A GECONF atua na promoção do <strong>ambiente regulatório externo</strong>, na conformidade das operações de crédito submetidas a colegiados e no monitoramento contínuo de conformidade.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p>No âmbito do monitoramento regulatório, realiza a avaliação contínua do risco de não conformidade regulatória por meio de testes e validações automatizadas.</p>
+                    </div>
+                    <div class="info-block" data-delay="600">
+                        <p>No que tange às verificações de conformidade, tanto na fase prévia quanto posterior às deliberações dos colegiados, a atuação abrange análise de enquadramento regulatório.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: GECONF Frentes -->
+        <section class="slide slide--fronts" data-slide="7">
+            <div class="slide__bg slide__bg--light">
+                <div class="slide__overlay slide__overlay--subtle"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title slide__title--dark">Frentes Estratégicas — GECONF</h2>
+                <div class="fronts-layout">
+                    <div class="front-column">
+                        <h3 class="front-column__title">Frentes</h3>
+                        <div class="front-item" data-delay="100">
+                            <span class="front-item__bullet"></span>
+                            <span>Transformação Digital do Checklist de Conformidade</span>
+                        </div>
+                        <div class="front-item" data-delay="200">
+                            <span class="front-item__bullet"></span>
+                            <span>Evolução do Monitoramento Contínuo de Conformidade</span>
+                        </div>
+                        <div class="front-item" data-delay="300">
+                            <span class="front-item__bullet"></span>
+                            <span>Otimização da análise de normas externas</span>
+                        </div>
+                        <div class="front-item" data-delay="400">
+                            <span class="front-item__bullet"></span>
+                            <span>Inteligência regulatória</span>
+                        </div>
+                        <div class="front-item" data-delay="500">
+                            <span class="front-item__bullet"></span>
+                            <span>Demandas Específicas</span>
+                        </div>
+                    </div>
+                    <div class="front-column">
+                        <h3 class="front-column__title">Plano de Trabalho</h3>
+                        <div class="front-detail" data-delay="200">Estruturação da automação do checklist de conformidade com uso de IA e regras de negócio</div>
+                        <div class="front-detail" data-delay="300">Validação automatizada de informações em documentos e sistemas corporativos</div>
+                        <div class="front-detail" data-delay="400">Aprovação da Metodologia de classificação de risco regulatório</div>
+                        <div class="front-detail" data-delay="500">Centralização e tratamento automatizado das bases descentralizadas</div>
+                        <div class="front-detail" data-delay="600">Redução de esforço operacional com foco em análises mais estratégicas e qualitativas</div>
+                        <div class="front-detail" data-delay="700">Revisão estrutural do processo de MCC com foco em maior confiabilidade e governança</div>
+                        <div class="front-detail" data-delay="800">Mapeamento de requisitos críticos das verificações de conformidade</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: GECONF Frentes (cont.) -->
+        <section class="slide slide--fronts-alt" data-slide="8">
+            <div class="slide__bg">
+                <div class="slide__bg--gradient-mesh"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title">Planos de Trabalho — GECONF</h2>
+                <div class="work-plans">
+                    <div class="work-plan-section" data-delay="100">
+                        <h3>Transformação Digital do Checklist</h3>
+                        <ul>
+                            <li>Estruturação da automação com uso de IA e regras de negócio</li>
+                            <li>Validação automatizada de informações em documentos e sistemas</li>
+                            <li>Mapeamento de requisitos e regras de negócio nas verificações</li>
+                        </ul>
+                    </div>
+                    <div class="work-plan-section" data-delay="300">
+                        <h3>Inteligência Regulatória</h3>
+                        <ul>
+                            <li>Aprovação da metodologia de classificação de risco regulatório</li>
+                            <li>Normatização do processo de gestão de normas externas</li>
+                            <li>Redução de esforço operacional com foco qualitativo</li>
+                        </ul>
+                    </div>
+                    <div class="work-plan-section" data-delay="500">
+                        <h3>Monitoramento Contínuo de Conformidade</h3>
+                        <ul>
+                            <li>Avaliação sobre inclusão de novos pontos de maior risco</li>
+                            <li>Revisão estrutural do MCC com integração e governança dos dados</li>
+                            <li>Centralização e tratamento automatizado das bases</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: GDICE -->
+        <section class="slide slide--gdice" data-slide="9">
+            <div class="slide__bg">
+                <img src="images/slide9_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Gerência de Gestão de Dados e Inteligência</h2>
+                    <div class="slide__subtitle-badge">GDICE</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A GDICE atua transversalmente nas áreas de <strong>transformação digital, gestão de dados, inteligência artificial e automação</strong> de processos do departamento.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p>A atividade da gerência abrange tanto o desenvolvimento e manutenção de soluções necessárias para a execução de processos internos quanto o suporte técnico às demais gerências.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: GDICE Iniciativas -->
+        <section class="slide slide--initiatives" data-slide="10">
+            <div class="slide__bg slide__bg--light">
+                <div class="slide__overlay slide__overlay--subtle"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title slide__title--dark">Novas Iniciativas — GDICE</h2>
+                <div class="initiatives-grid">
+                    <div class="initiative-card" data-delay="100">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/><path d="M13 7h4M13 11h4"/></svg>
+                        </div>
+                        <p>Automatização do Checklist de Conformidade</p>
+                    </div>
+                    <div class="initiative-card" data-delay="200">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 20h20M5 20V8l3-3M10 20V5l3-3M15 20V8l3-3M19 20v-8"/><circle cx="6.5" cy="5" r="0.5" fill="currentColor"/><circle cx="11.5" cy="2" r="0.5" fill="currentColor"/><circle cx="16.5" cy="5" r="0.5" fill="currentColor"/></svg>
+                        </div>
+                        <p>Modernização da Infraestrutura do Monitoramento Contínuo</p>
+                    </div>
+                    <div class="initiative-card" data-delay="300">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>
+                        </div>
+                        <p>Rotinas de Dados da Torre de Controle</p>
+                    </div>
+                    <div class="initiative-card" data-delay="400">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a7 7 0 017 7c0 2.5-1.5 4.5-3 6l-1 4H9l-1-4c-1.5-1.5-3-3.5-3-6a7 7 0 017-7z"/><path d="M9 19h6M10 22h4"/></svg>
+                        </div>
+                        <p>Treinamento de Modelos Estatísticos para Detecção de Anomalias</p>
+                    </div>
+                    <div class="initiative-card" data-delay="500">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                        </div>
+                        <p>Verificação Independente de Preços</p>
+                    </div>
+                    <div class="initiative-card" data-delay="600">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        </div>
+                        <p>Sincronização da base de dados de normas externas</p>
+                    </div>
+                    <div class="initiative-card" data-delay="700">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/><path d="M12 2v1"/></svg>
+                        </div>
+                        <p>Envio de alertas do HubAIC para as demais áreas</p>
+                    </div>
+                    <div class="initiative-card" data-delay="800">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+                        </div>
+                        <p>Inventário de Modelos</p>
+                    </div>
+                    <div class="initiative-card" data-delay="900">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        </div>
+                        <p>Identificação Contínua de Novas Oportunidades de Automação</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: UCON -->
+        <section class="slide slide--ucon" data-slide="11">
+            <div class="slide__bg">
+                <img src="images/slide11_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Unidade de Controle</h2>
+                    <div class="slide__subtitle-badge">UCON</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A UCON é responsável pela gestão das <strong>barreiras de informação (chinese wall)</strong> e análise dos conflitos de interesses institucionais.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p>No âmbito da gestão das barreiras, a UCON gerencia a Lista de Negociação Restrita, bloqueando valores mobiliários para assegurar o cumprimento das políticas internas.</p>
+                    </div>
+                    <div class="info-block" data-delay="600">
+                        <p>A análise dos potenciais e efetivos conflitos de interesses institucionais ocorre de forma pontual nas diversas fases das operações.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: UCON Frentes -->
+        <section class="slide slide--fronts" data-slide="12">
+            <div class="slide__bg slide__bg--light">
+                <div class="slide__overlay slide__overlay--subtle"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title slide__title--dark">Frentes Estratégicas — UCON</h2>
+                <div class="fronts-layout">
+                    <div class="front-column">
+                        <h3 class="front-column__title">Frentes</h3>
+                        <div class="front-item" data-delay="100">
+                            <span class="front-item__bullet"></span>
+                            <span>Gerenciamento das Barreiras de Informação</span>
+                        </div>
+                        <div class="front-item" data-delay="200">
+                            <span class="front-item__bullet"></span>
+                            <span>Avaliação de conflitos de interesses institucionais</span>
+                        </div>
+                        <div class="front-item" data-delay="300">
+                            <span class="front-item__bullet"></span>
+                            <span>Monitoramento de pautas dos colegiados internos</span>
+                        </div>
+                        <div class="front-item" data-delay="400">
+                            <span class="front-item__bullet"></span>
+                            <span>Monitoramento da circulação de informações</span>
+                        </div>
+                    </div>
+                    <div class="front-column">
+                        <h3 class="front-column__title">Plano de Trabalho</h3>
+                        <div class="front-detail" data-delay="200">Criação de metodologia para avaliação da materialidade das informações (MNPI)</div>
+                        <div class="front-detail" data-delay="300">Regulamentação da Lista de Observação</div>
+                        <div class="front-detail" data-delay="400">Aprimorar o uso de ferramentas para monitoramento da circulação de informações</div>
+                        <div class="front-detail" data-delay="500">Subsidiar a Área de Mercado de Capitais na criação de normativo sobre barreiras</div>
+                        <div class="front-detail" data-delay="600">Identificar junto à Gerência de Segurança melhorias na classificação das informações</div>
+                        <div class="front-detail" data-delay="700">Orientações internas para monitoramento de pautas de colegiados</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13: GEMOD -->
+        <section class="slide slide--gemod" data-slide="13">
+            <div class="slide__bg">
+                <img src="images/slide13_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Gestão de Risco de Modelo</h2>
+                    <div class="slide__subtitle-badge">GEMOD</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A GEMOD é responsável pela <strong>gestão de risco de modelo e validação independente</strong> no âmbito do Sistema BNDES.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p><strong>Apoio:</strong> Suporte aos gestores de modelo ao longo de todo o ciclo de vida, desde o desenvolvimento até a descontinuação.</p>
+                    </div>
+                    <div class="info-block" data-delay="600">
+                        <p><strong>Monitoramento:</strong> Conformidade geral dos modelos, incluindo documentação, planos de ação e atualização.</p>
+                    </div>
+                    <div class="info-block" data-delay="800">
+                        <p><strong>Opiniões independentes:</strong> Destaque para o processo ICAAP e apreçamento de ativos financeiros.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 14: GEMOD Formas de Atuação -->
+        <section class="slide slide--fronts-alt" data-slide="14">
+            <div class="slide__bg">
+                <div class="slide__bg--gradient-mesh slide__bg--gradient-mesh-alt"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title">Formas de Atuação — GEMOD</h2>
+                <div class="action-grid">
+                    <div class="action-card action-card--highlight" data-delay="100">
+                        <h3>ICAAP 2026–2028</h3>
+                        <p>Processo interno de avaliação de adequação de capital</p>
+                    </div>
+                    <div class="action-card" data-delay="200">
+                        <h3>C3PO</h3>
+                        <p>1º Assistente de IA para normas internas</p>
+                    </div>
+                    <div class="action-card" data-delay="300">
+                        <h3>Validação Independente</h3>
+                        <p>Revisão dos procedimentos para validação independente de modelos</p>
+                    </div>
+                    <div class="action-card" data-delay="400">
+                        <h3>Ciclo de Identificação</h3>
+                        <p>Ciclo de Identificação de Risco de Modelo</p>
+                    </div>
+                    <div class="action-card" data-delay="500">
+                        <h3>Verificação de Apreçamento</h3>
+                        <p>Verificação Independente de Apreçamento de ativos</p>
+                    </div>
+                    <div class="action-card" data-delay="600">
+                        <h3>Política Corporativa</h3>
+                        <p>Revisão da Política Corporativa de Gestão de Risco de Modelos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="presentation.js"></script>
+</body>
+</html>
