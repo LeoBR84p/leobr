@@ -714,6 +714,31 @@ html, body {
     border-left-color: var(--color-accent-bright);
 }
 
+.front-group {
+    margin-top: 0.8rem;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    background: rgba(15, 29, 56, 0.04);
+    border: 1px solid rgba(184, 148, 79, 0.12);
+}
+
+.slide--fronts .front-group {
+    background: rgba(15, 29, 56, 0.04);
+}
+
+.front-group__title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-accent-dark);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.01em;
+}
+
+.front-group .front-detail {
+    margin-bottom: 0.3rem;
+}
+
 /* Work Plans (Slide 8) */
 .work-plans {
     display: grid;
@@ -904,6 +929,65 @@ html, body {
     font-size: 1.08rem;
     line-height: 1.6;
     color: var(--color-text-muted);
+}
+
+/* Closing Slide */
+.closing-card {
+    text-align: center;
+    padding: 5rem 3rem;
+}
+
+.closing-card__heading {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 2rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(244, 240, 232, 0.75) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 1s var(--transition-premium) 0.3s both;
+}
+
+.closing-card__divider {
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), var(--color-accent-light), var(--color-accent), transparent);
+    margin: 0 auto 2.5rem;
+    animation: fadeInUp 1s var(--transition-premium) 0.5s both;
+}
+
+.closing-card__dept {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    animation: fadeInUp 1s var(--transition-premium) 0.7s both;
+}
+
+.closing-card__unit {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    color: var(--color-primary);
+    padding: 0.5rem 2rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    margin: 1.5rem 0;
+    box-shadow: var(--shadow-gold);
+    animation: fadeInUp 1s var(--transition-premium) 0.9s both;
+}
+
+.closing-card__date {
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(244, 240, 232, 0.4);
+    animation: fadeInUp 1s var(--transition-premium) 1.1s both;
 }
 
 /* Animations */

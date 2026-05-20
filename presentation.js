@@ -39,13 +39,13 @@
             'Frentes Estratégicas — GECOI',
             'GECONF — Conformidade',
             'Frentes Estratégicas — GECONF',
-            'Planos de Trabalho — GECONF',
             'GDICE — Dados e Inteligência',
             'Novas Iniciativas — GDICE',
             'UCON — Controle',
             'Frentes Estratégicas — UCON',
             'GEMOD — Risco de Modelo',
             'Formas de Atuação — GEMOD',
+            'Obrigado',
         ];
 
         titles.forEach((title, i) => {
