@@ -175,6 +175,7 @@
 
         state.current = target;
         updateUI();
+        handleSlideMedia(target);
 
         setTimeout(() => {
             currentSlideEl.classList.remove('exit-left', 'exit-right');
@@ -200,6 +201,21 @@
     function toggleOverview(forceState) {
         const show = forceState !== undefined ? forceState : dom.overviewPanel.classList.contains('hidden');
         dom.overviewPanel.classList.toggle('hidden', !show);
+    }
+
+    function handleSlideMedia(slideNum) {
+        document.querySelectorAll('.norma-ai__video').forEach((video) => {
+            video.pause();
+            video.currentTime = 0;
+        });
+
+        if (slideNum === 14) {
+            const video = dom.slides[13]?.querySelector('.norma-ai__video');
+            if (video) {
+                video.currentTime = 0;
+                video.play().catch(() => {});
+            }
+        }
     }
 
     if (document.readyState === 'loading') {
