@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DECOI - Departamento de Controle Interno | AIC/DECOI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --color-primary: #070d1a;
+    --color-secondary: #0f1d38;
+    --color-tertiary: #162647;
+    --color-accent: #b8944f;
+    --color-accent-light: #d4b06a;
+    --color-accent-bright: #e8c96e;
+    --color-accent-dark: #8a6d3b;
+    --color-text: #f4f0e8;
+    --color-text-muted: rgba(244, 240, 232, 0.65);
+    --color-text-dark: #0f1d38;
+    --color-surface: rgba(255, 255, 255, 0.03);
+    --color-surface-light: #faf9f6;
+    --color-glass: rgba(15, 29, 56, 0.55);
+    --color-glass-strong: rgba(7, 13, 26, 0.75);
+    --color-glass-border: rgba(184, 148, 79, 0.2);
+    --color-glass-border-hover: rgba(212, 176, 106, 0.5);
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition-premium: cubic-bezier(0.22, 1, 0.36, 1);
+    --shadow-luxury: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(184, 148, 79, 0.05);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(184, 148, 79, 0.08);
+    --shadow-gold: 0 8px 40px rgba(184, 148, 79, 0.2), 0 0 80px rgba(184, 148, 79, 0.05);
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: var(--font-primary);
+    background: var(--color-primary);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Progress Bar */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent-dark), var(--color-accent), var(--color-accent-bright));
+    z-index: 1000;
+    transition: width 0.8s var(--transition-premium);
+    box-shadow: 0 0 20px rgba(184, 148, 79, 0.6), 0 0 40px rgba(184, 148, 79, 0.2);
+}
+
+/* Slide Counter */
+#slide-counter {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    z-index: 100;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    backdrop-filter: blur(16px);
+    background: var(--color-glass-strong);
+    padding: 0.6rem 1.4rem;
+    border-radius: 2rem;
+    border: 1px solid var(--color-glass-border);
+}
+
+/* Navigation Controls */
+#nav-controls {
+    position: fixed;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem;
+    z-index: 100;
+}
+
+#nav-controls button {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--color-glass-border);
+    background: var(--color-glass-strong);
+    backdrop-filter: blur(16px);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s var(--transition-premium);
+}
+
+#nav-controls button:hover {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    border-color: var(--color-accent);
+    color: var(--color-primary);
+    transform: scale(1.08);
+    box-shadow: var(--shadow-gold);
+}
+
+#nav-controls button:active {
+    transform: scale(0.95);
+}
+
+/* Overview Button */
+#btn-overview {
+    position: fixed;
+    top: 2.5rem;
+    right: 2.5rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid var(--color-glass-border);
+    background: var(--color-glass-strong);
+    backdrop-filter: blur(16px);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    transition: all 0.4s var(--transition-premium);
+}
+
+#btn-overview:hover {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    border-color: var(--color-accent);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-gold);
+}
+
+/* Overview Panel */
+#overview-panel {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 13, 26, 0.96);
+    backdrop-filter: blur(30px);
+    z-index: 150;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    transition: opacity 0.5s var(--transition-premium), visibility 0.5s;
+    opacity: 1;
+}
+
+#overview-panel.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem;
+    max-width: 1300px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+.overview-thumb {
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+    border: 1px solid var(--color-glass-border);
+    background: var(--color-glass);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s var(--transition-premium);
+    padding: 1.2rem;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: var(--color-text-muted);
+}
+
+.overview-thumb:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-gold);
+    color: var(--color-text);
+}
+
+.overview-thumb.active {
+    border-color: var(--color-accent);
+    background: linear-gradient(135deg, rgba(184, 148, 79, 0.1), rgba(184, 148, 79, 0.03));
+    box-shadow: 0 0 0 3px rgba(184, 148, 79, 0.15);
+}
+
+/* Presentation */
+#presentation {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Slides */
+.slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(80px) scale(0.96);
+    transition: opacity 1s var(--transition-premium),
+                transform 1s var(--transition-premium),
+                visibility 1s;
+    will-change: transform, opacity;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0) scale(1);
+}
+
+.slide.exit-left {
+    opacity: 0;
+    transform: translateX(-80px) scale(0.96);
+}
+
+.slide.exit-right {
+    opacity: 0;
+    transform: translateX(80px) scale(0.96);
+}
+
+/* Slide Backgrounds */
+.slide__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.slide__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.08);
+    transition: transform 12s linear;
+    filter: brightness(0.85) saturate(1.1);
+}
+
+.slide.active .slide__bg-img {
+    transform: scale(1);
+}
+
+.slide__bg--light {
+    background: linear-gradient(160deg, #faf9f6 0%, #f0ede6 40%, #e8e4da 100%);
+}
+
+.slide__bg--gradient-mesh {
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 15% 50%, rgba(22, 38, 71, 0.95) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 15%, rgba(184, 148, 79, 0.08) 0%, transparent 35%),
+        radial-gradient(ellipse at 50% 85%, rgba(7, 13, 26, 0.9) 0%, transparent 50%),
+        linear-gradient(150deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-tertiary) 100%);
+}
+
+.slide__bg--gradient-mesh-alt {
+    background: 
+        radial-gradient(ellipse at 85% 50%, rgba(184, 148, 79, 0.06) 0%, transparent 35%),
+        radial-gradient(ellipse at 15% 80%, rgba(22, 38, 71, 0.95) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 15%, rgba(7, 13, 26, 0.85) 0%, transparent 50%),
+        linear-gradient(200deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-tertiary) 100%);
+}
+
+.slide__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(7, 13, 26, 0.4) 0%, rgba(7, 13, 26, 0.7) 100%);
+}
+
+.slide__overlay--dark {
+    background: linear-gradient(160deg, rgba(7, 13, 26, 0.75) 0%, rgba(7, 13, 26, 0.9) 100%);
+}
+
+.slide__overlay--gradient {
+    background: linear-gradient(160deg, rgba(7, 13, 26, 0.8) 0%, rgba(15, 29, 56, 0.88) 100%);
+}
+
+.slide__overlay--subtle {
+    background: 
+        radial-gradient(ellipse at 30% 70%, rgba(184, 148, 79, 0.02) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 30%, rgba(184, 148, 79, 0.015) 0%, transparent 40%);
+}
+
+/* Slide Content */
+.slide__content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    width: 88%;
+    padding: 2rem;
+}
+
+.slide__content--two-col {
+    display: grid;
+    grid-template-columns: 0.8fr 1.5fr;
+    gap: 5rem;
+    align-items: start;
+}
+
+.slide__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 600;
+    margin-bottom: 1.8rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.slide__title--dark {
+    color: var(--color-text-dark);
+}
+
+.slide__subtitle-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    color: var(--color-primary);
+    padding: 0.5rem 1.8rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    box-shadow: var(--shadow-gold);
+}
+
+/* Title Card (Slide 1) */
+.title-card {
+    text-align: center;
+    padding: 5rem 3rem;
+}
+
+.title-card__badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light), var(--color-accent-bright));
+    color: var(--color-primary);
+    padding: 0.65rem 2.5rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-gold);
+    animation: fadeInUp 1s var(--transition-premium) 0.2s both;
+}
+
+.title-card__heading {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 1s var(--transition-premium) 0.5s both;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(244, 240, 232, 0.75) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.title-card__divider {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), var(--color-accent-light), var(--color-accent), transparent);
+    margin: 0 auto 2.5rem;
+    border-radius: 2px;
+    animation: fadeInUp 1s var(--transition-premium) 0.7s both;
+}
+
+.title-card__date {
+    font-size: 1.35rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 1.2rem;
+    animation: fadeInUp 1s var(--transition-premium) 0.9s both;
+}
+
+.title-card__classification {
+    font-size: 1.05rem;
+    color: rgba(244, 240, 232, 0.3);
+    letter-spacing: 0.05em;
+    animation: fadeInUp 1s var(--transition-premium) 1.1s both;
+}
+
+/* Org Chart (Slide 2) */
+.org-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.org-card {
+    background: var(--color-glass);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    transition: all 0.4s var(--transition-premium);
+    box-shadow: var(--shadow-card);
+}
+
+.org-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-glass-border-hover);
+    box-shadow: var(--shadow-gold);
+}
+
+.org-card--main {
+    background: linear-gradient(135deg, var(--color-accent-dark), var(--color-accent), var(--color-accent-light));
+    color: var(--color-primary);
+    border: none;
+    padding: 2rem 3.5rem;
+    box-shadow: var(--shadow-gold);
+}
+
+.org-card--main h3 {
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.org-card__icon {
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-light);
+}
+
+.org-card--main .org-card__icon {
+    color: var(--color-primary);
+}
+
+.org-card h4 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.02em;
+}
+
+.org-card p {
+    font-size: 1.02rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+}
+
+.org-card--main p {
+    color: rgba(7, 13, 26, 0.6);
+}
+
+.org-chart__branches {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.org-chart__branches .org-card {
+    width: 180px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.org-stats {
+    display: flex;
+    gap: 4rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-glass-border);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--color-accent-light);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+/* Policies (Slide 3) */
+.policies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+}
+
+.policy-card {
+    background: var(--color-glass);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: all 0.4s var(--transition-premium);
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.policy-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light));
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.policy-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-glass-border-hover);
+    box-shadow: var(--shadow-gold);
+}
+
+.policy-card:hover::before {
+    opacity: 1;
+}
+
+.policy-card--wide {
+    grid-column: span 2;
+}
+
+.policy-card__acronym {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    color: var(--color-primary);
+    padding: 0.3rem 1.1rem;
+    border-radius: 1rem;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+}
+
+.policy-card p {
+    font-size: 1.12rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+.policy-card__period {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.96rem;
+    color: var(--color-accent-light);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Info Blocks */
+.info-block {
+    background: var(--color-glass);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 14px;
+    padding: 1.4rem 1.8rem;
+    margin-bottom: 1rem;
+    border-left: 2px solid var(--color-accent);
+    transition: all 0.4s var(--transition-premium);
+    box-shadow: var(--shadow-card);
+}
+
+.info-block:hover {
+    transform: translateX(6px);
+    border-left-color: var(--color-accent-bright);
+    box-shadow: var(--shadow-gold);
+}
+
+.info-block p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+}
+
+.info-block strong {
+    color: var(--color-accent-light);
+    font-weight: 600;
+}
+
+.footnote {
+    font-size: 1.02rem;
+    color: rgba(244, 240, 232, 0.35);
+    font-style: italic;
+    margin-top: 1.5rem;
+    letter-spacing: 0.02em;
+}
+
+/* Fronts Layout */
+.fronts-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 4rem;
+}
+
+.front-column__title {
+    font-size: 0.96rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 0.8rem;
+}
+
+.front-column__title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 1.5px;
+    background: var(--color-accent);
+}
+
+.slide--fronts .front-column__title {
+    color: var(--color-accent-dark);
+}
+
+.slide--fronts .front-column__title::after {
+    background: var(--color-accent-dark);
+}
+
+.front-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.4rem;
+    border-radius: 10px;
+    transition: all 0.3s var(--transition-premium);
+    font-size: 1.12rem;
+    font-weight: 400;
+}
+
+.slide--fronts .front-item {
+    color: var(--color-text-dark);
+}
+
+.front-item:hover {
+    background: rgba(184, 148, 79, 0.06);
+    transform: translateX(4px);
+}
+
+.front-item__bullet {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(184, 148, 79, 0.3);
+}
+
+.front-detail {
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    border-left: 2px solid var(--color-accent);
+    transition: all 0.3s var(--transition-premium);
+}
+
+.slide--fronts .front-detail {
+    color: var(--color-text-dark);
+    background: rgba(15, 29, 56, 0.03);
+}
+
+.front-detail:hover {
+    transform: translateX(6px);
+    background: rgba(184, 148, 79, 0.06);
+    border-left-color: var(--color-accent-bright);
+}
+
+.front-group {
+    margin-top: 0.8rem;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    background: rgba(15, 29, 56, 0.04);
+    border: 1px solid rgba(184, 148, 79, 0.12);
+}
+
+.slide--fronts .front-group {
+    background: rgba(15, 29, 56, 0.04);
+}
+
+.front-group__title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-accent-dark);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.01em;
+}
+
+.front-group .front-detail {
+    margin-bottom: 0.3rem;
+}
+
+/* Work Plans (Slide 8) */
+.work-plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.work-plan-section {
+    background: var(--color-glass);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.4s var(--transition-premium);
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.work-plan-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light), transparent);
+}
+
+.work-plan-section:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-glass-border-hover);
+    box-shadow: var(--shadow-gold);
+}
+
+.work-plan-section h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-accent-light);
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.01em;
+}
+
+.work-plan-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.work-plan-section li {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+.work-plan-section li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.9rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    box-shadow: 0 0 6px rgba(184, 148, 79, 0.3);
+}
+
+/* Initiatives Grid (Slide 10) */
+.initiatives-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.2rem;
+}
+
+.initiative-card {
+    background: rgba(15, 29, 56, 0.04);
+    border: 1px solid rgba(15, 29, 56, 0.08);
+    border-radius: 14px;
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+    transition: all 0.4s var(--transition-premium);
+    position: relative;
+    overflow: hidden;
+}
+
+.initiative-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(184, 148, 79, 0.03), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.initiative-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-accent);
+    box-shadow: 0 12px 40px rgba(184, 148, 79, 0.08);
+}
+
+.initiative-card:hover::before {
+    opacity: 1;
+}
+
+.initiative-card__icon {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-dark);
+    opacity: 0.8;
+}
+
+.initiative-card:hover .initiative-card__icon {
+    opacity: 1;
+    color: var(--color-accent);
+}
+
+.initiative-card p {
+    font-size: 1.08rem;
+    line-height: 1.5;
+    color: var(--color-text-dark);
+    position: relative;
+}
+
+/* Action Grid (Slide 14) */
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.3rem;
+}
+
+.action-card {
+    background: var(--color-glass);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.4s var(--transition-premium);
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.action-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.action-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-glass-border-hover);
+    box-shadow: var(--shadow-gold);
+}
+
+.action-card:hover::before {
+    opacity: 1;
+}
+
+.action-card--highlight {
+    background: linear-gradient(160deg, rgba(184, 148, 79, 0.12), rgba(184, 148, 79, 0.03));
+    border-color: rgba(184, 148, 79, 0.35);
+}
+
+.action-card--highlight::before {
+    opacity: 1;
+}
+
+.action-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-accent-light);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.01em;
+}
+
+.action-card p {
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+/* Closing Slide */
+.closing-card {
+    text-align: center;
+    padding: 5rem 3rem;
+}
+
+.closing-card__heading {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 2rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(244, 240, 232, 0.75) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 1s var(--transition-premium) 0.3s both;
+}
+
+.closing-card__divider {
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), var(--color-accent-light), var(--color-accent), transparent);
+    margin: 0 auto 2.5rem;
+    animation: fadeInUp 1s var(--transition-premium) 0.5s both;
+}
+
+.closing-card__dept {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    animation: fadeInUp 1s var(--transition-premium) 0.7s both;
+}
+
+.closing-card__unit {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    color: var(--color-primary);
+    padding: 0.5rem 2rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    margin: 1.5rem 0;
+    box-shadow: var(--shadow-gold);
+    animation: fadeInUp 1s var(--transition-premium) 0.9s both;
+}
+
+.closing-card__date {
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(244, 240, 232, 0.4);
+    animation: fadeInUp 1s var(--transition-premium) 1.1s both;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Element entrance animations for active slide */
+.slide.active [data-delay] {
+    animation: fadeInUp 0.7s var(--transition-premium) both;
+}
+
+.slide.active [data-delay="100"] { animation-delay: 0.1s; }
+.slide.active [data-delay="200"] { animation-delay: 0.2s; }
+.slide.active [data-delay="300"] { animation-delay: 0.3s; }
+.slide.active [data-delay="400"] { animation-delay: 0.4s; }
+.slide.active [data-delay="500"] { animation-delay: 0.5s; }
+.slide.active [data-delay="600"] { animation-delay: 0.6s; }
+.slide.active [data-delay="700"] { animation-delay: 0.7s; }
+.slide.active [data-delay="800"] { animation-delay: 0.8s; }
+.slide.active [data-delay="900"] { animation-delay: 0.9s; }
+.slide.active [data-delay="1000"] { animation-delay: 1.0s; }
+
+.slide:not(.active) [data-delay] {
+    opacity: 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .slide__content--two-col {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .fronts-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .org-chart__branches {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .org-stats {
+        gap: 2rem;
+    }
+
+    .policy-card--wide {
+        grid-column: span 1;
+    }
+
+    #nav-controls {
+        bottom: 1.5rem;
+    }
+
+    #slide-counter {
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .slide__content {
+        padding: 1.2rem;
+        width: 94%;
+    }
+
+    .title-card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .title-card__heading {
+        font-size: 2.2rem;
+    }
+
+    .slide__title {
+        font-size: 1.4rem;
+    }
+
+    .work-plans {
+        grid-template-columns: 1fr;
+    }
+
+    .initiatives-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .action-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 1rem;
+    }
+}
+
+/* Scrollbar */
+.overview-grid::-webkit-scrollbar {
+    width: 4px;
+}
+
+.overview-grid::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.overview-grid::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 2px;
+}
+
+/* Print styles */
+@media print {
+    .slide {
+        position: relative;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        page-break-after: always;
+        min-height: 100vh;
+    }
+
+    #nav-controls, #btn-overview, #progress-bar, #slide-counter {
+        display: none;
+    }
+}
+
+</style>
+</head>
+<body>
+    <div id="progress-bar"></div>
+    <div id="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">14</span></div>
+    
+    <nav id="nav-controls">
+        <button id="btn-prev" aria-label="Slide anterior">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button id="btn-next" aria-label="Próximo slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+    </nav>
+
+    <button id="btn-overview" aria-label="Visão geral">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+        </svg>
+    </button>
+
+    <div id="overview-panel" class="hidden">
+        <div class="overview-grid"></div>
+    </div>
+
+    <main id="presentation">
+        <!-- Slide 1: Title -->
+        <section class="slide slide--title active" data-slide="1">
+            <div class="slide__bg">
+                <img src="./images/slide1_img0.jpg" alt="" aria-hidden="true" role="presentation" class="slide__bg-img">
+                <div class="slide__overlay"></div>
+            </div>
+            <div class="slide__content">
+                <div class="title-card">
+                    <div class="title-card__badge">AIC/DECOI</div>
+                    <h1 class="title-card__heading">Departamento de<br>Controle Interno</h1>
+                    <div class="title-card__divider"></div>
+                    <p class="title-card__date">Maio / 2026</p>
+                    <p class="title-card__classification">Classificação: Ostensivo &bull; Unidade Gestora: AIC/DECOI</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: Estrutura -->
+        <section class="slide slide--structure" data-slide="2">
+            <div class="slide__bg">
+                <img src="./images/slide2_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title">Estrutura AIC/DECOI</h2>
+                <div class="org-chart">
+                    <div class="org-card org-card--main">
+                        <div class="org-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/><path d="M9 9h1M14 9h1M9 13h1M14 13h1"/></svg>
+                        </div>
+                        <h3>AIC/DECOI</h3>
+                        <p>Departamento de Controle Interno</p>
+                    </div>
+                    <div class="org-chart__branches">
+                        <div class="org-card" data-delay="200">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 5-5"/><circle cx="20" cy="7" r="1.5"/></svg>
+                            </div>
+                            <h4>GECOI</h4>
+                            <p>Controle Interno</p>
+                        </div>
+                        <div class="org-card" data-delay="400">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3L2 8l10 5 10-5-10-5z"/><path d="M2 16l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                            </div>
+                            <h4>GECONF</h4>
+                            <p>Conformidade</p>
+                        </div>
+                        <div class="org-card" data-delay="600">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                            </div>
+                            <h4>GDICE</h4>
+                            <p>Dados e Inteligência</p>
+                        </div>
+                        <div class="org-card" data-delay="800">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+                            </div>
+                            <h4>UCON</h4>
+                            <p>Controle</p>
+                        </div>
+                        <div class="org-card" data-delay="1000">
+                            <div class="org-card__icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v16H4z"/><path d="M4 9h16M4 14h16M9 4v16M14 4v16"/></svg>
+                            </div>
+                            <h4>GEMOD</h4>
+                            <p>Risco de Modelos</p>
+                        </div>
+                    </div>
+                    <div class="org-stats">
+                        <div class="stat-item"><span class="stat-number">13</span><span class="stat-label">Colaboradores</span></div>
+                        <div class="stat-item"><span class="stat-number">3</span><span class="stat-label">Estagiários</span></div>
+                        <div class="stat-item"><span class="stat-number">2</span><span class="stat-label">Jovens Aprendizes</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Políticas -->
+        <section class="slide slide--policies" data-slide="3">
+            <div class="slide__bg">
+                <img src="./images/slide3_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--gradient"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title">Políticas Corporativas</h2>
+                <div class="policies-grid">
+                    <div class="policy-card" data-delay="100">
+                        <div class="policy-card__acronym">PCON</div>
+                        <p>Política de Controle Interno e Conformidade</p>
+                        <span class="policy-card__period">2024–2028</span>
+                    </div>
+                    <div class="policy-card" data-delay="200">
+                        <div class="policy-card__acronym">PCCI</div>
+                        <p>Política de Controle de Conflitos de Interesses Institucionais</p>
+                        <span class="policy-card__period">2025–2029</span>
+                    </div>
+                    <div class="policy-card" data-delay="300">
+                        <div class="policy-card__acronym">PCBI</div>
+                        <p>Política de Barreira de Informações</p>
+                        <span class="policy-card__period">2024–2028</span>
+                    </div>
+                    <div class="policy-card" data-delay="400">
+                        <div class="policy-card__acronym">PCGRiM</div>
+                        <p>Política de Risco de Modelo</p>
+                        <span class="policy-card__period">2024–2025</span>
+                    </div>
+                    <div class="policy-card policy-card--wide" data-delay="500">
+                        <div class="policy-card__acronym">Manual</div>
+                        <p>Manual de Procedimento para Avaliação de Riscos de Modelos</p>
+                        <span class="policy-card__period">2024–2028</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: GECOI -->
+        <section class="slide slide--gecoi" data-slide="4">
+            <div class="slide__bg">
+                <img src="./images/slide4_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Gerência de Controle Interno</h2>
+                    <div class="slide__subtitle-badge">GECOI</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A GECOI exerce papel central no fortalecimento do <strong>Ambiente de Controle Interno</strong>, por meio de monitoramento e avaliação contínuos.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p>Atuando em <strong>nível institucional</strong>, consolida <strong>indicadores</strong> e evidências para avaliar, de forma integrada, a <strong>efetividade</strong> dos controles internos da organização.</p>
+                    </div>
+                    <div class="info-block" data-delay="600">
+                        <p>A atuação é complementar às atividades de Gestão do Risco Operacional (AIC/DEROP), que mapeia os controles internos nos processos.</p>
+                    </div>
+                    <div class="info-block" data-delay="800">
+                        <p><strong>AIC/DECOI</strong> — Monitoramento de controles transversais e corporativos</p>
+                    </div>
+                    <div class="info-block" data-delay="1000">
+                        <p><strong>AIC/DEROP</strong> — Testes de controles associados à mitigação de riscos relevantes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: GECOI Frentes -->
+        <section class="slide slide--fronts" data-slide="5">
+            <div class="slide__bg slide__bg--light">
+                <div class="slide__overlay slide__overlay--subtle"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title slide__title--dark">Frentes Estratégicas — GECOI</h2>
+                <div class="fronts-layout">
+                    <div class="front-column">
+                        <h3 class="front-column__title">Frentes</h3>
+                        <div class="front-item" data-delay="100">
+                            <span class="front-item__bullet"></span>
+                            <span>Maturidade do SCI</span>
+                        </div>
+                        <div class="front-item" data-delay="200">
+                            <span class="front-item__bullet"></span>
+                            <span>Avaliação da Efetividade da PLDFT</span>
+                        </div>
+                        <div class="front-item" data-delay="300">
+                            <span class="front-item__bullet"></span>
+                            <span>Monitoramento do SCI (Torre de Controle)</span>
+                        </div>
+                        <div class="front-item" data-delay="400">
+                            <span class="front-item__bullet"></span>
+                            <span>Qualidade das Informações / CADOCs (Res Conj BCB 18)</span>
+                        </div>
+                    </div>
+                    <div class="front-column">
+                        <h3 class="front-column__title">Plano de Trabalho</h3>
+                        <div class="front-detail" data-delay="200">Acompanhamento da evolução da Maturidade do SCI</div>
+                        <div class="front-detail" data-delay="300">Relatório de Avaliação e Acompanhamento da efetividade da PLDFT (RAAE)</div>
+                        <div class="front-detail" data-delay="400">Implementação da atividade de avaliação contínua da Qualidade da Informação prestada ao BCB</div>
+                        <div class="front-detail" data-delay="500">Estruturando o Monitoramento dos CADOCs (Tempestividade e Qualidade)</div>
+                        <div class="front-group" data-delay="600">
+                            <h4 class="front-group__title">Implementação da Torre de Controle</h4>
+                            <div class="front-detail">Design de fluxos de automação de dados com apoio dos Cientistas de dados</div>
+                            <div class="front-detail">Fase piloto de monitoramento baseado em dados para identificação de situações atípicas</div>
+                            <div class="front-detail">Evolução para criação sistematizada de indicadores de efetividade da PLDFT</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: GECONF -->
+        <section class="slide slide--geconf" data-slide="6">
+            <div class="slide__bg">
+                <img src="./images/slide6_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Gerência de Conformidade</h2>
+                    <div class="slide__subtitle-badge">GECONF</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A GECONF atua na promoção do <strong>ambiente regulatório externo</strong>, na <strong>conformidade das operações</strong> submetidas a colegiados e no <strong>monitoramento contínuo</strong> de conformidade das operações celebradas.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p>No âmbito do monitoramento regulatório, realiza a avaliação contínua da não conformidade regulatória por meio de testes e validações automatizadas.</p>
+                    </div>
+                    <div class="info-block" data-delay="600">
+                        <p>No que tange às verificações de conformidade, tanto na fase prévia quanto posterior às deliberações dos colegiados, a atuação abrange análise de enquadramento regulatório.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: GECONF Frentes -->
+        <section class="slide slide--fronts" data-slide="7">
+            <div class="slide__bg slide__bg--light">
+                <div class="slide__overlay slide__overlay--subtle"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title slide__title--dark">Frentes Estratégicas — GECONF</h2>
+                <div class="fronts-layout">
+                    <div class="front-column">
+                        <h3 class="front-column__title">Frentes</h3>
+                        <div class="front-item" data-delay="100">
+                            <span class="front-item__bullet"></span>
+                            <span>Transformação Digital do Checklist de Conformidade</span>
+                        </div>
+                        <div class="front-item" data-delay="200">
+                            <span class="front-item__bullet"></span>
+                            <span>Evolução do Monitoramento Contínuo de Conformidade</span>
+                        </div>
+                        <div class="front-item" data-delay="300">
+                            <span class="front-item__bullet"></span>
+                            <span>Otimização da análise de normas externas</span>
+                        </div>
+                        <div class="front-item" data-delay="400">
+                            <span class="front-item__bullet"></span>
+                            <span>Inteligência regulatória</span>
+                        </div>
+                    </div>
+                    <div class="front-column">
+                        <h3 class="front-column__title">Plano de Trabalho</h3>
+                        <div class="front-detail" data-delay="200">Estruturação da automação do checklist de conformidade com uso de IA e regras de negócio</div>
+                        <div class="front-detail" data-delay="300">Validação automatizada de informações em documentos e sistemas corporativos</div>
+                        <div class="front-detail" data-delay="400">Metodologia de Classificação de Gap Regulatório</div>
+                        <div class="front-detail" data-delay="500">Redução de esforço operacional com foco em análises mais estratégicas e qualitativas</div>
+                        <div class="front-detail" data-delay="700">Revisão estrutural do processo de MCC com foco em maior amplitude e governança</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: GDICE -->
+        <section class="slide slide--gdice" data-slide="8">
+            <div class="slide__bg">
+                <img src="./images/slide9_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Gerência de Gestão de Dados e Inteligência</h2>
+                    <div class="slide__subtitle-badge">GDICE</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A GDICE atua transversalmente no Depto, nas iniciativas de <strong>transformação digital, gestão de dados, inteligência artificial e automação</strong> de processos.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p>A atividade da gerência abrange tanto o desenvolvimento e manutenção de soluções necessárias para a execução de processos internos quanto o suporte técnico às demais gerências.</p>
+                    </div>
+                    <div class="info-block" data-delay="600">
+                        <p>Responsável pela transformação digital dos trabalhos de controle interno, buscando ampliar cobertura de atuação com métodos automatizados e com uso intensivo de IA.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: GDICE Iniciativas -->
+        <section class="slide slide--initiatives" data-slide="9">
+            <div class="slide__bg slide__bg--light">
+                <div class="slide__overlay slide__overlay--subtle"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title slide__title--dark">Novas Iniciativas — GDICE</h2>
+                <div class="initiatives-grid">
+                    <div class="initiative-card" data-delay="100">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/><path d="M13 7h4M13 11h4"/></svg>
+                        </div>
+                        <p>Automatização do Checklist de Conformidade</p>
+                    </div>
+                    <div class="initiative-card" data-delay="200">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 20h20M5 20V8l3-3M10 20V5l3-3M15 20V8l3-3M19 20v-8"/><circle cx="6.5" cy="5" r="0.5" fill="currentColor"/><circle cx="11.5" cy="2" r="0.5" fill="currentColor"/><circle cx="16.5" cy="5" r="0.5" fill="currentColor"/></svg>
+                        </div>
+                        <p>Modernização da Infraestrutura do Monitoramento Contínuo</p>
+                    </div>
+                    <div class="initiative-card" data-delay="300">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>
+                        </div>
+                        <p>Rotinas de Dados da Torre de Controle</p>
+                    </div>
+                    <div class="initiative-card" data-delay="400">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a7 7 0 017 7c0 2.5-1.5 4.5-3 6l-1 4H9l-1-4c-1.5-1.5-3-3.5-3-6a7 7 0 017-7z"/><path d="M9 19h6M10 22h4"/></svg>
+                        </div>
+                        <p>Treinamento de Modelos Estatísticos para Detecção de Situações Atípicas</p>
+                    </div>
+                    <div class="initiative-card" data-delay="500">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                        </div>
+                        <p>Verificação Independente de Preços</p>
+                    </div>
+                    <div class="initiative-card" data-delay="600">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/><path d="M12 2v1"/></svg>
+                        </div>
+                        <p>Envio de alertas do HubAIC para as demais áreas</p>
+                    </div>
+                    <div class="initiative-card" data-delay="700">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+                        </div>
+                        <p>Inventário de Modelos</p>
+                    </div>
+                    <div class="initiative-card" data-delay="800">
+                        <div class="initiative-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        </div>
+                        <p>Identificação Contínua de Novas Oportunidades de Automação</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: UCON -->
+        <section class="slide slide--ucon" data-slide="10">
+            <div class="slide__bg">
+                <img src="./images/slide11_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Unidade de Controle</h2>
+                    <div class="slide__subtitle-badge">UCON</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A UCON é responsável pela gestão das <strong>barreiras de informação (chinese wall)</strong> e análise dos <strong>conflitos de interesses</strong> institucionais.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p>No âmbito da gestão das barreiras, a UCON gerencia a Lista de Negociação Restrita, bloqueando valores mobiliários para assegurar o cumprimento da Lei e das políticas internas.</p>
+                    </div>
+                    <div class="info-block" data-delay="600">
+                        <p>Monitoramento das matérias em colegiados internos (CCOp, CDEP, COINV e Diretoria Executiva), garantindo a segregação de funções e a proteção aos tomadores de decisão.</p>
+                    </div>
+                    <div class="info-block" data-delay="800">
+                        <p>A análise dos potenciais e efetivos conflitos de interesses institucionais ocorre de forma pontual nas diversas fases das operações.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: UCON Frentes -->
+        <section class="slide slide--fronts" data-slide="11">
+            <div class="slide__bg slide__bg--light">
+                <div class="slide__overlay slide__overlay--subtle"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title slide__title--dark">Frentes Estratégicas — UCON</h2>
+                <div class="fronts-layout">
+                    <div class="front-column">
+                        <h3 class="front-column__title">Frentes</h3>
+                        <div class="front-item" data-delay="100">
+                            <span class="front-item__bullet"></span>
+                            <span>Gerenciamento das Barreiras de Informação</span>
+                        </div>
+                        <div class="front-item" data-delay="200">
+                            <span class="front-item__bullet"></span>
+                            <span>Avaliação de conflitos de interesses institucionais</span>
+                        </div>
+                        <div class="front-item" data-delay="300">
+                            <span class="front-item__bullet"></span>
+                            <span>Monitoramento de pautas dos colegiados internos</span>
+                        </div>
+                        <div class="front-item" data-delay="400">
+                            <span class="front-item__bullet"></span>
+                            <span>Monitoramento da circulação de informações</span>
+                        </div>
+                    </div>
+                    <div class="front-column">
+                        <h3 class="front-column__title">Plano de Trabalho</h3>
+                        <div class="front-detail" data-delay="200">Criação de metodologia para avaliação da materialidade das informações (MNPI)</div>
+                        <div class="front-detail" data-delay="300">Regulamentação da Lista de Observação</div>
+                        <div class="front-detail" data-delay="400">Aprimorar o uso de ferramentas para monitoramento da circulação de informações</div>
+                        <div class="front-detail" data-delay="500">Subsidiar a Área de Mercado de Capitais na criação de orientações internas sobre barreiras</div>
+                        <div class="front-detail" data-delay="600">Orientações internas para monitoramento de pautas de colegiados</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13: GEMOD -->
+        <section class="slide slide--gemod" data-slide="12">
+            <div class="slide__bg">
+                <img src="./images/slide13_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content slide__content--two-col">
+                <div class="slide__left">
+                    <h2 class="slide__title">Gestão de Risco de Modelo</h2>
+                    <div class="slide__subtitle-badge">GEMOD</div>
+                </div>
+                <div class="slide__right">
+                    <div class="info-block" data-delay="200">
+                        <p>A GEMOD é responsável pela <strong>gestão de risco de modelo e validação independente</strong> no âmbito do Sistema BNDES.</p>
+                    </div>
+                    <div class="info-block" data-delay="400">
+                        <p><strong>Apoio:</strong> Suporte aos gestores de modelo ao longo de todo o ciclo de vida, desde o desenvolvimento até a descontinuação.</p>
+                    </div>
+                    <div class="info-block" data-delay="600">
+                        <p><strong>Monitoramento:</strong> Conformidade geral dos modelos, incluindo documentação, planos de ação e atualização.</p>
+                    </div>
+                    <div class="info-block" data-delay="800">
+                        <p><strong>Opiniões independentes:</strong> Destaque para o processo ICAAP e apreçamento de ativos financeiros a valor justo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 14: GEMOD Formas de Atuação -->
+        <section class="slide slide--fronts-alt" data-slide="13">
+            <div class="slide__bg">
+                <div class="slide__bg--gradient-mesh slide__bg--gradient-mesh-alt"></div>
+            </div>
+            <div class="slide__content">
+                <h2 class="slide__title">Formas de Atuação — GEMOD</h2>
+                <div class="action-grid">
+                    <div class="action-card action-card--highlight" data-delay="100">
+                        <h3>ICAAP 2026–2028</h3>
+                        <p>Processo interno de avaliação de adequação de capital</p>
+                    </div>
+                    <div class="action-card" data-delay="200">
+                        <h3>Norma.AI</h3>
+                        <p>1º Assistente de Chat com IA para consulta a normas internas</p>
+                    </div>
+                    <div class="action-card" data-delay="300">
+                        <h3>Validação Independente</h3>
+                        <p>Revisão dos procedimentos para validação independente de modelos</p>
+                    </div>
+                    <div class="action-card" data-delay="400">
+                        <h3>Ciclo de Identificação</h3>
+                        <p>Ciclo de Identificação de Risco de Modelo</p>
+                    </div>
+                    <div class="action-card" data-delay="500">
+                        <h3>Verificação de Apreçamento</h3>
+                        <p>Verificação Independente de Apreçamento de ativos</p>
+                    </div>
+                    <div class="action-card" data-delay="600">
+                        <h3>Política Corporativa</h3>
+                        <p>Revisão da Política Corporativa de Gestão de Risco de Modelos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 14: Encerramento -->
+        <section class="slide slide--closing" data-slide="14">
+            <div class="slide__bg">
+                <img src="./images/slide1_img0.jpg" alt="Background" class="slide__bg-img">
+                <div class="slide__overlay slide__overlay--dark"></div>
+            </div>
+            <div class="slide__content">
+                <div class="closing-card">
+                    <h2 class="closing-card__heading">Obrigado</h2>
+                    <div class="closing-card__divider"></div>
+                    <p class="closing-card__dept">Departamento de Controle Interno</p>
+                    <p class="closing-card__unit">AIC/DECOI</p>
+                    <p class="closing-card__date">Maio / 2026</p>
+                </div>
+            </div>
+        </section>
+    </main>
+<script>
+(() => {
+    'use strict';
+
+    const state = {
+        current: 1,
+        total: 14,
+        animating: false,
+        touchStartX: 0,
+        touchStartY: 0,
+    };
+
+    const dom = {
+        slides: document.querySelectorAll('.slide'),
+        progressBar: document.getElementById('progress-bar'),
+        currentSlide: document.getElementById('current-slide'),
+        totalSlides: document.getElementById('total-slides'),
+        btnPrev: document.getElementById('btn-prev'),
+        btnNext: document.getElementById('btn-next'),
+        btnOverview: document.getElementById('btn-overview'),
+        overviewPanel: document.getElementById('overview-panel'),
+        overviewGrid: document.querySelector('.overview-grid'),
+    };
+
+    const TRANSITION_DURATION = 800;
+
+    function init() {
+        dom.totalSlides.textContent = state.total;
+        buildOverview();
+        bindEvents();
+        updateUI();
+    }
+
+    function buildOverview() {
+        const titles = [
+            'Departamento de Controle Interno',
+            'Estrutura AIC/DECOI',
+            'Políticas Corporativas',
+            'GECOI — Controle Interno',
+            'Frentes Estratégicas — GECOI',
+            'GECONF — Conformidade',
+            'Frentes Estratégicas — GECONF',
+            'GDICE — Dados e Inteligência',
+            'Novas Iniciativas — GDICE',
+            'UCON — Controle',
+            'Frentes Estratégicas — UCON',
+            'GEMOD — Risco de Modelo',
+            'Formas de Atuação — GEMOD',
+            'Obrigado',
+        ];
+
+        titles.forEach((title, i) => {
+            const thumb = document.createElement('div');
+            thumb.className = `overview-thumb${i === 0 ? ' active' : ''}`;
+            thumb.textContent = title;
+            thumb.dataset.slide = i + 1;
+            thumb.addEventListener('click', () => {
+                goToSlide(i + 1);
+                toggleOverview(false);
+            });
+            dom.overviewGrid.appendChild(thumb);
+        });
+    }
+
+    function bindEvents() {
+        dom.btnPrev.addEventListener('click', prevSlide);
+        dom.btnNext.addEventListener('click', nextSlide);
+        dom.btnOverview.addEventListener('click', () => toggleOverview());
+
+        document.addEventListener('keydown', handleKeydown);
+        document.addEventListener('touchstart', handleTouchStart, { passive: true });
+        document.addEventListener('touchend', handleTouchEnd, { passive: true });
+        document.addEventListener('wheel', handleWheel, { passive: false });
+    }
+
+    function handleKeydown(e) {
+        if (!dom.overviewPanel.classList.contains('hidden')) {
+            if (e.key === 'Escape') toggleOverview(false);
+            return;
+        }
+
+        switch (e.key) {
+            case 'ArrowRight':
+            case 'ArrowDown':
+            case ' ':
+            case 'PageDown':
+                e.preventDefault();
+                nextSlide();
+                break;
+            case 'ArrowLeft':
+            case 'ArrowUp':
+            case 'PageUp':
+                e.preventDefault();
+                prevSlide();
+                break;
+            case 'Home':
+                e.preventDefault();
+                goToSlide(1);
+                break;
+            case 'End':
+                e.preventDefault();
+                goToSlide(state.total);
+                break;
+            case 'Escape':
+                toggleOverview();
+                break;
+            case 'g':
+                toggleOverview();
+                break;
+        }
+    }
+
+    function handleTouchStart(e) {
+        state.touchStartX = e.changedTouches[0].screenX;
+        state.touchStartY = e.changedTouches[0].screenY;
+    }
+
+    function handleTouchEnd(e) {
+        const deltaX = e.changedTouches[0].screenX - state.touchStartX;
+        const deltaY = e.changedTouches[0].screenY - state.touchStartY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+            if (deltaX < 0) nextSlide();
+            else prevSlide();
+        }
+    }
+
+    let wheelTimeout = null;
+    function handleWheel(e) {
+        e.preventDefault();
+        if (wheelTimeout) return;
+
+        wheelTimeout = setTimeout(() => {
+            wheelTimeout = null;
+        }, 800);
+
+        if (e.deltaY > 30) nextSlide();
+        else if (e.deltaY < -30) prevSlide();
+    }
+
+    function nextSlide() {
+        if (state.animating || state.current >= state.total) return;
+        goToSlide(state.current + 1, 'next');
+    }
+
+    function prevSlide() {
+        if (state.animating || state.current <= 1) return;
+        goToSlide(state.current - 1, 'prev');
+    }
+
+    function goToSlide(target, direction) {
+        if (target === state.current || state.animating) return;
+        if (target < 1 || target > state.total) return;
+
+        state.animating = true;
+        const dir = direction || (target > state.current ? 'next' : 'prev');
+
+        const currentSlideEl = dom.slides[state.current - 1];
+        const nextSlideEl = dom.slides[target - 1];
+
+        currentSlideEl.classList.remove('active');
+        currentSlideEl.classList.add(dir === 'next' ? 'exit-left' : 'exit-right');
+
+        nextSlideEl.classList.remove('exit-left', 'exit-right');
+        nextSlideEl.style.transform = dir === 'next'
+            ? 'translateX(60px) scale(0.97)'
+            : 'translateX(-60px) scale(0.97)';
+        nextSlideEl.style.opacity = '0';
+
+        requestAnimationFrame(() => {
+            nextSlideEl.classList.add('active');
+            nextSlideEl.style.transform = '';
+            nextSlideEl.style.opacity = '';
+        });
+
+        state.current = target;
+        updateUI();
+
+        setTimeout(() => {
+            currentSlideEl.classList.remove('exit-left', 'exit-right');
+            state.animating = false;
+        }, TRANSITION_DURATION);
+    }
+
+    function updateUI() {
+        const progress = (state.current / state.total) * 100;
+        dom.progressBar.style.width = `${progress}%`;
+        dom.currentSlide.textContent = state.current;
+
+        dom.btnPrev.style.opacity = state.current <= 1 ? '0.3' : '1';
+        dom.btnPrev.style.pointerEvents = state.current <= 1 ? 'none' : 'auto';
+        dom.btnNext.style.opacity = state.current >= state.total ? '0.3' : '1';
+        dom.btnNext.style.pointerEvents = state.current >= state.total ? 'none' : 'auto';
+
+        document.querySelectorAll('.overview-thumb').forEach((thumb) => {
+            thumb.classList.toggle('active', parseInt(thumb.dataset.slide) === state.current);
+        });
+    }
+
+    function toggleOverview(forceState) {
+        const show = forceState !== undefined ? forceState : dom.overviewPanel.classList.contains('hidden');
+        dom.overviewPanel.classList.toggle('hidden', !show);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
+</script>
+</body>
+</html>

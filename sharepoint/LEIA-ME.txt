@@ -1,0 +1,56 @@
+DECOI — Apresentação Web Interativa (versão SharePoint)
+=======================================================
+
+Esta pasta é uma cópia self-contained da apresentação, pronta para
+hospedagem em SharePoint ou qualquer servidor de arquivos estáticos.
+
+Conteúdo
+--------
+  index.html      — HTML com CSS e JavaScript embutidos (sem dependências locais)
+  images/         — Imagens de fundo dos slides
+  LEIA-ME.txt     — Este arquivo
+
+A versão original (com arquivos separados) permanece na raiz do repositório:
+  /index.html, /styles.css, /presentation.js, /images/
+
+
+Como publicar no SharePoint
+---------------------------
+
+Opção A — Biblioteca de Documentos (recomendada)
+  1. Crie uma pasta na biblioteca de documentos (ex: "Apresentacao-DECOI")
+  2. Faça upload de TODOS os arquivos desta pasta, mantendo a estrutura:
+       index.html
+       images/slide1_img0.jpg
+       images/slide2_img0.jpg
+       ... (todas as imagens)
+  3. Clique com botão direito em index.html → Abrir
+     OU copie o link direto do arquivo e abra no navegador
+
+Opção B — Página SharePoint com iframe
+  1. Pubique a pasta conforme Opção A
+  2. Copie a URL pública de index.html
+  3. Em uma Página Moderna, adicione um web part "Inserir" → "Embed"
+  4. Cole a URL do index.html
+
+Opção C — Abrir localmente (teste)
+  1. Extraia esta pasta para o computador
+  2. Abra index.html diretamente no Chrome ou Edge
+     (funciona offline, exceto as fontes Google)
+
+
+Navegação
+---------
+  Setas ← →     Avançar / voltar slide
+  Espaço        Próximo slide
+  G             Visão geral (grid de slides)
+  Scroll        Navegar entre slides
+  Swipe         Mobile
+
+
+Observações
+-----------
+  - As fontes Inter e Playfair Display são carregadas do Google Fonts.
+    Se a rede corporativa bloquear, o navegador usará fontes substitutas.
+  - Mantenha index.html e a pasta images/ no mesmo diretório.
+  - Não renomeie a pasta images/ sem atualizar os caminhos no HTML.
