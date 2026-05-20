@@ -714,6 +714,83 @@ html, body {
     border-left-color: var(--color-accent-bright);
 }
 
+/* Slide 5 — Torre de Controle visual */
+.slide--gecoi-fronts {
+    overflow: hidden;
+}
+
+.slide__visual--left {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    width: min(320px, 28vw);
+    padding: 0 0 1.5rem 1.5rem;
+    pointer-events: none;
+}
+
+.slide5-torre-img {
+    width: 100%;
+    height: auto;
+    max-height: 72vh;
+    object-fit: contain;
+    object-position: bottom left;
+    filter: drop-shadow(0 16px 48px rgba(15, 29, 56, 0.12));
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.slide.active .slide5-torre-img {
+    animation: torreFadeIn 1s var(--transition-premium) 0.3s both;
+}
+
+.slide__content--with-visual {
+    position: relative;
+    z-index: 2;
+    margin-left: min(280px, 24vw);
+    width: calc(100% - min(280px, 24vw));
+    max-width: 1100px;
+}
+
+@keyframes torreFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 0.92;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .slide__visual--left {
+        width: min(200px, 35vw);
+        padding: 0 0 1rem 0.75rem;
+    }
+
+    .slide__content--with-visual {
+        margin-left: min(180px, 30vw);
+        width: calc(100% - min(180px, 30vw));
+    }
+
+    .slide5-torre-img {
+        max-height: 50vh;
+    }
+}
+
+@media (max-width: 600px) {
+    .slide__visual--left {
+        width: 140px;
+        opacity: 0.7;
+    }
+
+    .slide__content--with-visual {
+        margin-left: 120px;
+        width: calc(100% - 120px);
+    }
+}
+
 .front-group {
     margin-top: 0.8rem;
     padding: 1rem 1.2rem;
