@@ -714,6 +714,31 @@ html, body {
     border-left-color: var(--color-accent-bright);
 }
 
+.front-group {
+    margin-top: 0.8rem;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    background: rgba(15, 29, 56, 0.04);
+    border: 1px solid rgba(184, 148, 79, 0.12);
+}
+
+.slide--fronts .front-group {
+    background: rgba(15, 29, 56, 0.04);
+}
+
+.front-group__title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-accent-dark);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.01em;
+}
+
+.front-group .front-detail {
+    margin-bottom: 0.3rem;
+}
+
 /* Work Plans (Slide 8) */
 .work-plans {
     display: grid;
