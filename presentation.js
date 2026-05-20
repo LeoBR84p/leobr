@@ -220,6 +220,7 @@
             const soundBtn = slide?.querySelector('.norma-ai__sound-btn');
             if (!video) return;
 
+            video.loop = false;
             video.muted = false;
             video.volume = 1;
             video.currentTime = 0;
