@@ -3,7 +3,7 @@
 
     const state = {
         current: 1,
-        total: 14,
+        total: 15,
         animating: false,
         touchStartX: 0,
         touchStartY: 0,
@@ -45,6 +45,7 @@
             'Frentes Estratégicas — UCON',
             'GEMOD — Risco de Modelo',
             'Formas de Atuação — GEMOD',
+            'Norma.AI — Projeto em Destaque',
             'Obrigado',
         ];
 
