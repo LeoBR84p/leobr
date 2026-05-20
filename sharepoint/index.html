@@ -1208,15 +1208,21 @@ html, body {
     animation: normaPulse 2s ease-in-out infinite;
 }
 
+.slide--norma-ai .slide__content {
+    width: 100%;
+    max-width: none;
+    padding: 2rem 0;
+}
+
 /* Norma.AI video panel */
 .norma-ai__layout {
     display: grid;
-    grid-template-columns: 1fr 1.15fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     gap: 2rem;
     align-items: center;
     max-width: none;
     width: 100%;
-    padding: 2rem 0 2rem 4%;
+    padding: 0 1.5rem 0 4%;
 }
 
 .norma-ai__video-wrap {
@@ -1224,11 +1230,10 @@ html, body {
     height: min(85vh, 720px);
     min-height: 400px;
     margin-right: 0;
-    border-radius: 20px 0 0 20px;
+    border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(184, 148, 79, 0.3);
-    border-right: none;
-    box-shadow: -12px 0 60px rgba(0, 0, 0, 0.45), 0 0 80px rgba(184, 148, 79, 0.06);
+    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.35), 0 0 60px rgba(184, 148, 79, 0.06);
     opacity: 0;
     transform: translateX(40px);
 }
@@ -1240,8 +1245,8 @@ html, body {
 .norma-ai__video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
+    object-fit: contain;
+    object-position: center center;
     display: block;
     background: #050a14;
 }
@@ -1249,7 +1254,7 @@ html, body {
 .norma-ai__video-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(5, 10, 20, 0.75) 0%, transparent 40%, transparent 100%);
+    background: linear-gradient(90deg, rgba(5, 10, 20, 0.6) 0%, transparent 35%, transparent 100%);
     pointer-events: none;
 }
 
@@ -1257,10 +1262,39 @@ html, body {
     position: absolute;
     inset: 0;
     border: 1px solid rgba(184, 148, 79, 0.25);
-    border-right: none;
-    border-radius: 20px 0 0 20px;
+    border-radius: 16px;
     pointer-events: none;
     box-shadow: inset 0 0 50px rgba(184, 148, 79, 0.06);
+}
+
+.norma-ai__sound-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(184, 148, 79, 0.5);
+    background: rgba(7, 13, 26, 0.85);
+    backdrop-filter: blur(10px);
+    color: var(--color-accent-light);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s var(--transition-premium);
+}
+
+.norma-ai__sound-btn:hover {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    color: var(--color-primary);
+    border-color: var(--color-accent);
+}
+
+.norma-ai__sound-btn.hidden {
+    display: none;
 }
 
 @keyframes normaVideoIn {
@@ -1311,12 +1345,6 @@ html, body {
         height: min(50vh, 400px);
         min-height: 280px;
         border-radius: 16px;
-        border-right: 1px solid rgba(184, 148, 79, 0.3);
-    }
-
-    .norma-ai__video-frame {
-        border-radius: 16px;
-        border-right: 1px solid rgba(184, 148, 79, 0.25);
     }
 }
 
@@ -2065,9 +2093,13 @@ html, body {
                 </div>
 
                 <div class="norma-ai__video-wrap">
-                    <video class="norma-ai__video" src="./images/norma-ai-landing.mp4" muted playsinline loop preload="auto" aria-label="Animação Norma.AI"></video>
+                    <video class="norma-ai__video" src="./images/norma-ai-landing.mp4" playsinline loop preload="auto" aria-label="Animação Norma.AI"></video>
                     <div class="norma-ai__video-overlay"></div>
                     <div class="norma-ai__video-frame"></div>
+                    <button type="button" class="norma-ai__sound-btn hidden" aria-label="Ativar som">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a9 9 0 010 12.73"/></svg>
+                        Ativar som
+                    </button>
                 </div>
             </div>
         </section>
@@ -2119,6 +2151,7 @@ html, body {
         dom.totalSlides.textContent = state.total;
         buildOverview();
         bindEvents();
+        bindNormaSoundButton();
         updateUI();
     }
 
@@ -2299,15 +2332,40 @@ html, body {
         document.querySelectorAll('.norma-ai__video').forEach((video) => {
             video.pause();
             video.currentTime = 0;
+            video.muted = true;
+        });
+        document.querySelectorAll('.norma-ai__sound-btn').forEach((btn) => {
+            btn.classList.add('hidden');
         });
 
         if (slideNum === 14) {
-            const video = dom.slides[13]?.querySelector('.norma-ai__video');
-            if (video) {
-                video.currentTime = 0;
+            const slide = dom.slides[13];
+            const video = slide?.querySelector('.norma-ai__video');
+            const soundBtn = slide?.querySelector('.norma-ai__sound-btn');
+            if (!video) return;
+
+            video.muted = false;
+            video.volume = 1;
+            video.currentTime = 0;
+
+            video.play().catch(() => {
+                video.muted = true;
                 video.play().catch(() => {});
-            }
+                soundBtn?.classList.remove('hidden');
+            });
         }
+    }
+
+    function bindNormaSoundButton() {
+        document.querySelectorAll('.norma-ai__sound-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const video = btn.closest('.norma-ai__video-wrap')?.querySelector('.norma-ai__video');
+                if (!video) return;
+                video.muted = false;
+                video.volume = 1;
+                video.play().then(() => btn.classList.add('hidden')).catch(() => {});
+            });
+        });
     }
 
     if (document.readyState === 'loading') {
