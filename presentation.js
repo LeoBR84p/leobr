@@ -3,7 +3,7 @@
 
     const state = {
         current: 1,
-        total: 14,
+        total: 13,
         animating: false,
         touchStartX: 0,
         touchStartY: 0,
@@ -39,7 +39,6 @@
             'Frentes Estratégicas — GECOI',
             'GECONF — Conformidade',
             'Frentes Estratégicas — GECONF',
-            'Planos de Trabalho — GECONF',
             'GDICE — Dados e Inteligência',
             'Novas Iniciativas — GDICE',
             'UCON — Controle',
