@@ -27,6 +27,7 @@
         dom.totalSlides.textContent = state.total;
         buildOverview();
         bindEvents();
+        bindNormaSoundButton();
         updateUI();
     }
 
@@ -207,15 +208,40 @@
         document.querySelectorAll('.norma-ai__video').forEach((video) => {
             video.pause();
             video.currentTime = 0;
+            video.muted = true;
+        });
+        document.querySelectorAll('.norma-ai__sound-btn').forEach((btn) => {
+            btn.classList.add('hidden');
         });
 
         if (slideNum === 14) {
-            const video = dom.slides[13]?.querySelector('.norma-ai__video');
-            if (video) {
-                video.currentTime = 0;
+            const slide = dom.slides[13];
+            const video = slide?.querySelector('.norma-ai__video');
+            const soundBtn = slide?.querySelector('.norma-ai__sound-btn');
+            if (!video) return;
+
+            video.muted = false;
+            video.volume = 1;
+            video.currentTime = 0;
+
+            video.play().catch(() => {
+                video.muted = true;
                 video.play().catch(() => {});
-            }
+                soundBtn?.classList.remove('hidden');
+            });
         }
+    }
+
+    function bindNormaSoundButton() {
+        document.querySelectorAll('.norma-ai__sound-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const video = btn.closest('.norma-ai__video-wrap')?.querySelector('.norma-ai__video');
+                if (!video) return;
+                video.muted = false;
+                video.volume = 1;
+                video.play().then(() => btn.classList.add('hidden')).catch(() => {});
+            });
+        });
     }
 
     if (document.readyState === 'loading') {
