@@ -187,12 +187,10 @@
             <div class="slide__bg slide__bg--light">
                 <div class="slide__overlay slide__overlay--subtle"></div>
             </div>
-            <div class="slide__visual slide__visual--left">
-                <img src="images/slide5-gecoi-screenshot.png" alt="Torre de Controle" class="slide5-torre-img">
-            </div>
-            <div class="slide__content slide__content--with-visual">
+            <div class="slide__content slide5-layout">
                 <h2 class="slide__title slide__title--dark">Frentes Estratégicas — GECOI</h2>
-                <div class="fronts-layout">
+                <div class="slide5-body">
+                    <div class="fronts-layout">
                     <div class="front-column">
                         <h3 class="front-column__title">Frentes</h3>
                         <div class="front-item" data-delay="100">
@@ -225,6 +223,11 @@
                             <div class="front-detail">Evolução para criação sistematizada de indicadores de efetividade da PLDFT</div>
                         </div>
                     </div>
+                    </div>
+                    <aside class="slide5-torre-card" data-delay="100" aria-label="Torre de Controle">
+                        <img src="images/slide5-gecoi-screenshot.png" alt="Torre de Controle — Monitoramento do SCI" class="slide5-torre-img">
+                        <p class="slide5-torre-caption">Torre de Controle</p>
+                    </aside>
                 </div>
             </div>
         </section>
@@ -523,7 +526,8 @@
             <div class="norma-ai__hud norma-ai__hud--br"></div>
             <div class="norma-ai__scanline"></div>
 
-            <div class="slide__content norma-ai__layout">
+            <div class="slide__content slide__content--norma-ai">
+                <div class="norma-ai__layout">
                 <div class="norma-ai__copy">
                     <div class="norma-ai__badge">Projeto em Destaque</div>
                     <h2 class="norma-ai__title">Norma<span class="norma-ai__dot">.</span>AI</h2>
@@ -549,13 +553,14 @@
                 </div>
 
                 <div class="norma-ai__video-wrap">
-                    <video class="norma-ai__video" src="images/norma-ai-landing.mp4" playsinline loop preload="auto" aria-label="Animação Norma.AI"></video>
+                    <video class="norma-ai__video" src="images/norma-ai-landing.mp4" playsinline preload="auto" aria-label="Animação Norma.AI"></video>
                     <div class="norma-ai__video-overlay"></div>
                     <div class="norma-ai__video-frame"></div>
                     <button type="button" class="norma-ai__sound-btn hidden" aria-label="Ativar som">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a9 9 0 010 12.73"/></svg>
                         Ativar som
                     </button>
+                </div>
                 </div>
             </div>
         </section>
