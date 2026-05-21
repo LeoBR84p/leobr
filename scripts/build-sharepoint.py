@@ -16,12 +16,14 @@ HTML = HTML.replace('<link rel="stylesheet" href="styles.css">', f"<style>\n{CSS
 HTML = HTML.replace('<script src="presentation.js"></script>', f"<script>\n{JS}\n</script>")
 HTML = re.sub(r'src="images/', 'src="./images/', HTML)
 HTML = re.sub(r'src="norma_ai\.mp4"', 'src="./norma_ai.mp4"', HTML)
+HTML = re.sub(r'src="alfanumerico\.mp4"', 'src="./alfanumerico.mp4"', HTML)
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(HTML, encoding="utf-8")
 
-norma_video = ROOT / "norma_ai.mp4"
-if norma_video.exists():
-    shutil.copy2(norma_video, OUT.parent / "norma_ai.mp4")
+for video_name in ("norma_ai.mp4", "alfanumerico.mp4"):
+    video_path = ROOT / video_name
+    if video_path.exists():
+        shutil.copy2(video_path, OUT.parent / video_name)
 
 print(f"Wrote {OUT} ({OUT.stat().st_size // 1024} KB)")
