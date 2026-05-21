@@ -76,8 +76,7 @@ html, body {
 #nav-controls {
     position: fixed;
     bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 2.5rem;
     display: flex;
     gap: 0.75rem;
     z-index: 100;
@@ -519,7 +518,7 @@ html, body {
 /* Policies (Slide 3) */
 .policies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.2rem;
 }
 
@@ -1134,6 +1133,13 @@ html, body {
     -webkit-text-fill-color: var(--color-accent-light);
 }
 
+.norma-ai__title--plain {
+    background: linear-gradient(135deg, #ffffff 0%, var(--color-accent-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .slide.active .norma-ai__title {
     animation: fadeInUp 0.8s var(--transition-premium) 1.7s both;
 }
@@ -1171,6 +1177,7 @@ html, body {
 .slide.active .norma-ai__feature:nth-child(1) { animation: fadeInUp 0.6s var(--transition-premium) 2s both; }
 .slide.active .norma-ai__feature:nth-child(2) { animation: fadeInUp 0.6s var(--transition-premium) 2.15s both; }
 .slide.active .norma-ai__feature:nth-child(3) { animation: fadeInUp 0.6s var(--transition-premium) 2.3s both; }
+.slide.active .norma-ai__feature:nth-child(4) { animation: fadeInUp 0.6s var(--transition-premium) 2.45s both; }
 
 .norma-ai__feature-icon {
     color: var(--color-accent);
@@ -1477,6 +1484,7 @@ html, body {
 
     #nav-controls {
         bottom: 1.5rem;
+        left: 1.5rem;
     }
 
     #slide-counter {
