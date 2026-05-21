@@ -3,6 +3,7 @@
 
 from pathlib import Path
 import re
+import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "sharepoint" / "index.html"
@@ -14,7 +15,13 @@ JS = (ROOT / "presentation.js").read_text(encoding="utf-8")
 HTML = HTML.replace('<link rel="stylesheet" href="styles.css">', f"<style>\n{CSS}\n</style>")
 HTML = HTML.replace('<script src="presentation.js"></script>', f"<script>\n{JS}\n</script>")
 HTML = re.sub(r'src="images/', 'src="./images/', HTML)
+HTML = re.sub(r'src="norma_ai\.mp4"', 'src="./norma_ai.mp4"', HTML)
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(HTML, encoding="utf-8")
+
+norma_video = ROOT / "norma_ai.mp4"
+if norma_video.exists():
+    shutil.copy2(norma_video, OUT.parent / "norma_ai.mp4")
+
 print(f"Wrote {OUT} ({OUT.stat().st_size // 1024} KB)")
