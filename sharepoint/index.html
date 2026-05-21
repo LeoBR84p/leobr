@@ -86,8 +86,7 @@ html, body {
 #nav-controls {
     position: fixed;
     bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 2.5rem;
     display: flex;
     gap: 0.75rem;
     z-index: 100;
@@ -529,7 +528,7 @@ html, body {
 /* Policies (Slide 3) */
 .policies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.2rem;
 }
 
@@ -1144,6 +1143,13 @@ html, body {
     -webkit-text-fill-color: var(--color-accent-light);
 }
 
+.norma-ai__title--plain {
+    background: linear-gradient(135deg, #ffffff 0%, var(--color-accent-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .slide.active .norma-ai__title {
     animation: fadeInUp 0.8s var(--transition-premium) 1.7s both;
 }
@@ -1181,6 +1187,7 @@ html, body {
 .slide.active .norma-ai__feature:nth-child(1) { animation: fadeInUp 0.6s var(--transition-premium) 2s both; }
 .slide.active .norma-ai__feature:nth-child(2) { animation: fadeInUp 0.6s var(--transition-premium) 2.15s both; }
 .slide.active .norma-ai__feature:nth-child(3) { animation: fadeInUp 0.6s var(--transition-premium) 2.3s both; }
+.slide.active .norma-ai__feature:nth-child(4) { animation: fadeInUp 0.6s var(--transition-premium) 2.45s both; }
 
 .norma-ai__feature-icon {
     color: var(--color-accent);
@@ -1487,6 +1494,7 @@ html, body {
 
     #nav-controls {
         bottom: 1.5rem;
+        left: 1.5rem;
     }
 
     #slide-counter {
@@ -1565,7 +1573,7 @@ html, body {
 </head>
 <body>
     <div id="progress-bar"></div>
-    <div id="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">15</span></div>
+    <div id="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">16</span></div>
     
     <nav id="nav-controls">
         <button id="btn-prev" aria-label="Slide anterior">
@@ -1696,7 +1704,12 @@ html, body {
                         <p>Política de Risco de Modelo</p>
                         <span class="policy-card__period">2024–2025</span>
                     </div>
-                    <div class="policy-card policy-card--wide" data-delay="500">
+                    <div class="policy-card" data-delay="500">
+                        <div class="policy-card__acronym">IS DIR9</div>
+                        <p>Procedimentos para Checklist de Conformidade</p>
+                        <span class="policy-card__period">2026–2030</span>
+                    </div>
+                    <div class="policy-card" data-delay="600">
                         <div class="policy-card__acronym">Manual</div>
                         <p>Manual de Procedimento para Avaliação de Riscos de Modelos</p>
                         <span class="policy-card__period">2024–2028</span>
@@ -1802,7 +1815,7 @@ html, body {
                         <p>A GECONF atua na promoção do <strong>ambiente regulatório externo</strong>, na <strong>conformidade das operações</strong> submetidas a colegiados e no <strong>monitoramento contínuo</strong> de conformidade das operações celebradas.</p>
                     </div>
                     <div class="info-block" data-delay="400">
-                        <p>No âmbito do monitoramento regulatório, realiza a avaliação contínua da não conformidade regulatória por meio de testes e validações automatizadas.</p>
+                        <p>No âmbito do monitoramento regulatório, realiza a avaliação contínua da conformidade, muitas vezes com o uso de testes e validações automatizadas.</p>
                     </div>
                     <div class="info-block" data-delay="600">
                         <p>No que tange às verificações de conformidade, tanto na fase prévia quanto posterior às deliberações dos colegiados, a atuação abrange análise de enquadramento regulatório.</p>
@@ -2119,8 +2132,65 @@ html, body {
             </div>
         </section>
 
-        <!-- Slide 15: Encerramento -->
-        <section class="slide slide--closing" data-slide="15">
+        <!-- Slide 15: CNPJ Alfanumérico Destaque -->
+        <section class="slide slide--norma-ai slide--cnpj" data-slide="15">
+            <div class="slide__bg">
+                <div class="norma-ai__bg"></div>
+                <div class="norma-ai__grid"></div>
+                <div class="norma-ai__glow norma-ai__glow--left"></div>
+                <div class="norma-ai__glow norma-ai__glow--right"></div>
+            </div>
+            <div class="norma-ai__hud norma-ai__hud--tl"></div>
+            <div class="norma-ai__hud norma-ai__hud--tr"></div>
+            <div class="norma-ai__hud norma-ai__hud--bl"></div>
+            <div class="norma-ai__hud norma-ai__hud--br"></div>
+            <div class="norma-ai__scanline"></div>
+
+            <div class="slide__content slide__content--norma-ai">
+                <div class="norma-ai__layout">
+                <div class="norma-ai__copy">
+                    <div class="norma-ai__badge">Projeto em Destaque</div>
+                    <h2 class="norma-ai__title norma-ai__title--plain">CNPJ Alfanumérico</h2>
+                    <p class="norma-ai__tagline">Coordenação da implementação nas alterações sistêmicas necessárias para a migração ao novo formato de CNPJ</p>
+                    <div class="norma-ai__features">
+                        <div class="norma-ai__feature">
+                            <span class="norma-ai__feature-icon">◆</span>
+                            <span>117 sistemas afetados (55%) associados a 11 projetos individuais coordenados</span>
+                        </div>
+                        <div class="norma-ai__feature">
+                            <span class="norma-ai__feature-icon">◆</span>
+                            <span>Cronograma meticulosamente acompanhado</span>
+                        </div>
+                        <div class="norma-ai__feature">
+                            <span class="norma-ai__feature-icon">◆</span>
+                            <span>Implementação prevista no timing regulatório exigido, sem surpresas</span>
+                        </div>
+                        <div class="norma-ai__feature">
+                            <span class="norma-ai__feature-icon">◆</span>
+                            <span>Atuação conjunta DECOI + Departamentos da ATI</span>
+                        </div>
+                    </div>
+                    <div class="norma-ai__status">
+                        <span class="norma-ai__status-dot"></span>
+                        Migração regulatória · DECOI + ATI
+                    </div>
+                </div>
+
+                <div class="norma-ai__video-wrap">
+                    <video class="norma-ai__video" src="./images/norma-ai-landing.mp4" playsinline preload="auto" aria-label="Animação CNPJ Alfanumérico"></video>
+                    <div class="norma-ai__video-overlay"></div>
+                    <div class="norma-ai__video-frame"></div>
+                    <button type="button" class="norma-ai__sound-btn hidden" aria-label="Ativar som">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a9 9 0 010 12.73"/></svg>
+                        Ativar som
+                    </button>
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 16: Encerramento -->
+        <section class="slide slide--closing" data-slide="16">
             <div class="slide__bg">
                 <img src="./images/slide1_img0.jpg" alt="Background" class="slide__bg-img">
                 <div class="slide__overlay slide__overlay--dark"></div>
@@ -2143,7 +2213,7 @@ html, body {
 
     const state = {
         current: 1,
-        total: 15,
+        total: 16,
         animating: false,
         touchStartX: 0,
         touchStartY: 0,
@@ -2187,6 +2257,7 @@ html, body {
             'GEMOD — Risco de Modelo',
             'Formas de Atuação — GEMOD',
             'Norma.AI — Projeto em Destaque',
+            'CNPJ Alfanumérico — Projeto em Destaque',
             'Obrigado',
         ];
 
@@ -2354,23 +2425,21 @@ html, body {
             btn.classList.add('hidden');
         });
 
-        if (slideNum === 14) {
-            const slide = dom.slides[13];
-            const video = slide?.querySelector('.norma-ai__video');
-            const soundBtn = slide?.querySelector('.norma-ai__sound-btn');
-            if (!video) return;
+        const slide = dom.slides[slideNum - 1];
+        const video = slide?.querySelector('.norma-ai__video');
+        const soundBtn = slide?.querySelector('.norma-ai__sound-btn');
+        if (!video) return;
 
-            video.loop = false;
-            video.muted = false;
-            video.volume = 1;
-            video.currentTime = 0;
+        video.loop = false;
+        video.muted = false;
+        video.volume = 1;
+        video.currentTime = 0;
 
-            video.play().catch(() => {
-                video.muted = true;
-                video.play().catch(() => {});
-                soundBtn?.classList.remove('hidden');
-            });
-        }
+        video.play().catch(() => {
+            video.muted = true;
+            video.play().catch(() => {});
+            soundBtn?.classList.remove('hidden');
+        });
     }
 
     function bindNormaSoundButton() {

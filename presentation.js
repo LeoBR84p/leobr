@@ -3,7 +3,7 @@
 
     const state = {
         current: 1,
-        total: 15,
+        total: 16,
         animating: false,
         touchStartX: 0,
         touchStartY: 0,
@@ -47,6 +47,7 @@
             'GEMOD — Risco de Modelo',
             'Formas de Atuação — GEMOD',
             'Norma.AI — Projeto em Destaque',
+            'CNPJ Alfanumérico — Projeto em Destaque',
             'Obrigado',
         ];
 
@@ -214,23 +215,21 @@
             btn.classList.add('hidden');
         });
 
-        if (slideNum === 14) {
-            const slide = dom.slides[13];
-            const video = slide?.querySelector('.norma-ai__video');
-            const soundBtn = slide?.querySelector('.norma-ai__sound-btn');
-            if (!video) return;
+        const slide = dom.slides[slideNum - 1];
+        const video = slide?.querySelector('.norma-ai__video');
+        const soundBtn = slide?.querySelector('.norma-ai__sound-btn');
+        if (!video) return;
 
-            video.loop = false;
-            video.muted = false;
-            video.volume = 1;
-            video.currentTime = 0;
+        video.loop = false;
+        video.muted = false;
+        video.volume = 1;
+        video.currentTime = 0;
 
-            video.play().catch(() => {
-                video.muted = true;
-                video.play().catch(() => {});
-                soundBtn?.classList.remove('hidden');
-            });
-        }
+        video.play().catch(() => {
+            video.muted = true;
+            video.play().catch(() => {});
+            soundBtn?.classList.remove('hidden');
+        });
     }
 
     function bindNormaSoundButton() {
