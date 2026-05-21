@@ -526,10 +526,14 @@ html, body {
 }
 
 /* Policies (Slide 3) */
-.policies-grid {
+.slide--policies .policies-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.2rem;
+}
+
+.policy-card--double {
+    grid-column: span 2;
 }
 
 .policy-card {
@@ -1150,6 +1154,11 @@ html, body {
     background-clip: text;
 }
 
+.slide--cnpj .norma-ai__title-sub {
+    font-size: 0.86em;
+    letter-spacing: -0.01em;
+}
+
 .slide.active .norma-ai__title {
     animation: fadeInUp 0.8s var(--transition-premium) 1.7s both;
 }
@@ -1488,8 +1497,13 @@ html, body {
         gap: 2rem;
     }
 
-    .policy-card--wide {
-        grid-column: span 1;
+    .policy-card--wide,
+    .policy-card--double {
+        grid-column: span 2;
+    }
+
+    .slide--policies .policies-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     #nav-controls {
@@ -1682,7 +1696,7 @@ html, body {
                 <div class="slide__overlay slide__overlay--gradient"></div>
             </div>
             <div class="slide__content">
-                <h2 class="slide__title">Políticas Corporativas</h2>
+                <h2 class="slide__title">Políticas e Procedimentos</h2>
                 <div class="policies-grid">
                     <div class="policy-card" data-delay="100">
                         <div class="policy-card__acronym">PCON</div>
@@ -1704,12 +1718,12 @@ html, body {
                         <p>Política de Risco de Modelo</p>
                         <span class="policy-card__period">2024–2025</span>
                     </div>
-                    <div class="policy-card" data-delay="500">
+                    <div class="policy-card policy-card--double" data-delay="500">
                         <div class="policy-card__acronym">IS DIR9</div>
                         <p>Procedimentos para Checklist de Conformidade</p>
                         <span class="policy-card__period">2026–2030</span>
                     </div>
-                    <div class="policy-card" data-delay="600">
+                    <div class="policy-card policy-card--double" data-delay="600">
                         <div class="policy-card__acronym">Manual</div>
                         <p>Manual de Procedimento para Avaliação de Riscos de Modelos</p>
                         <span class="policy-card__period">2024–2028</span>
@@ -2150,7 +2164,7 @@ html, body {
                 <div class="norma-ai__layout">
                 <div class="norma-ai__copy">
                     <div class="norma-ai__badge">Projeto em Destaque</div>
-                    <h2 class="norma-ai__title norma-ai__title--plain">CNPJ Alfanumérico</h2>
+                    <h2 class="norma-ai__title norma-ai__title--plain">CNPJ<br><span class="norma-ai__title-sub">Alfanumérico</span></h2>
                     <p class="norma-ai__tagline">Coordenação da implementação nas alterações sistêmicas necessárias para a migração ao novo formato de CNPJ</p>
                     <div class="norma-ai__features">
                         <div class="norma-ai__feature">
@@ -2231,7 +2245,7 @@ html, body {
         overviewGrid: document.querySelector('.overview-grid'),
     };
 
-    const TRANSITION_DURATION = 800;
+    const FEATURED_VIDEO_VOLUME = 0.7;
 
     function init() {
         dom.totalSlides.textContent = state.total;
@@ -2245,7 +2259,7 @@ html, body {
         const titles = [
             'Departamento de Controle Interno',
             'Estrutura AIC/DECOI',
-            'Políticas Corporativas',
+            'Políticas e Procedimentos',
             'GECOI — Controle Interno',
             'Frentes Estratégicas — GECOI',
             'GECONF — Conformidade',
@@ -2432,7 +2446,7 @@ html, body {
 
         video.loop = false;
         video.muted = false;
-        video.volume = 1;
+        video.volume = FEATURED_VIDEO_VOLUME;
         video.currentTime = 0;
 
         video.play().catch(() => {
@@ -2448,7 +2462,7 @@ html, body {
                 const video = btn.closest('.norma-ai__video-wrap')?.querySelector('.norma-ai__video');
                 if (!video) return;
                 video.muted = false;
-                video.volume = 1;
+                video.volume = FEATURED_VIDEO_VOLUME;
                 video.play().then(() => btn.classList.add('hidden')).catch(() => {});
             });
         });
