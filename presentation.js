@@ -21,6 +21,7 @@
         overviewGrid: document.querySelector('.overview-grid'),
     };
 
+    const TRANSITION_DURATION = 800;
     const FEATURED_VIDEO_VOLUME = 0.7;
 
     function init() {
@@ -210,6 +211,7 @@
             video.pause();
             video.currentTime = 0;
             video.muted = true;
+            video.volume = 0;
         });
         document.querySelectorAll('.norma-ai__sound-btn').forEach((btn) => {
             btn.classList.add('hidden');
@@ -221,9 +223,17 @@
         if (!video) return;
 
         video.loop = false;
+        video.currentTime = 0;
+
+        if (slide.classList.contains('slide--cnpj')) {
+            video.muted = true;
+            video.volume = 0;
+            video.play().catch(() => {});
+            return;
+        }
+
         video.muted = false;
         video.volume = FEATURED_VIDEO_VOLUME;
-        video.currentTime = 0;
 
         video.play().catch(() => {
             video.muted = true;
