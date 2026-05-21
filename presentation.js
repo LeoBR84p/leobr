@@ -21,6 +21,7 @@
         overviewGrid: document.querySelector('.overview-grid'),
     };
 
+    const TRANSITION_DURATION = 800;
     const FEATURED_VIDEO_VOLUME = 0.7;
 
     function init() {
