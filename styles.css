@@ -516,10 +516,14 @@ html, body {
 }
 
 /* Policies (Slide 3) */
-.policies-grid {
+.slide--policies .policies-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.2rem;
+}
+
+.policy-card--double {
+    grid-column: span 2;
 }
 
 .policy-card {
@@ -1140,6 +1144,11 @@ html, body {
     background-clip: text;
 }
 
+.slide--cnpj .norma-ai__title-sub {
+    font-size: 0.86em;
+    letter-spacing: -0.01em;
+}
+
 .slide.active .norma-ai__title {
     animation: fadeInUp 0.8s var(--transition-premium) 1.7s both;
 }
@@ -1478,8 +1487,13 @@ html, body {
         gap: 2rem;
     }
 
-    .policy-card--wide {
-        grid-column: span 1;
+    .policy-card--wide,
+    .policy-card--double {
+        grid-column: span 2;
+    }
+
+    .slide--policies .policies-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     #nav-controls {

@@ -21,7 +21,7 @@
         overviewGrid: document.querySelector('.overview-grid'),
     };
 
-    const TRANSITION_DURATION = 800;
+    const FEATURED_VIDEO_VOLUME = 0.7;
 
     function init() {
         dom.totalSlides.textContent = state.total;
@@ -35,7 +35,7 @@
         const titles = [
             'Departamento de Controle Interno',
             'Estrutura AIC/DECOI',
-            'Políticas Corporativas',
+            'Políticas e Procedimentos',
             'GECOI — Controle Interno',
             'Frentes Estratégicas — GECOI',
             'GECONF — Conformidade',
@@ -222,7 +222,7 @@
 
         video.loop = false;
         video.muted = false;
-        video.volume = 1;
+        video.volume = FEATURED_VIDEO_VOLUME;
         video.currentTime = 0;
 
         video.play().catch(() => {
@@ -238,7 +238,7 @@
                 const video = btn.closest('.norma-ai__video-wrap')?.querySelector('.norma-ai__video');
                 if (!video) return;
                 video.muted = false;
-                video.volume = 1;
+                video.volume = FEATURED_VIDEO_VOLUME;
                 video.play().then(() => btn.classList.add('hidden')).catch(() => {});
             });
         });
