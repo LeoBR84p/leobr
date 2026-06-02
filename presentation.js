@@ -3,7 +3,7 @@
 
     const state = {
         current: 1,
-        total: 16,
+        total: 17,
         animating: false,
         touchStartX: 0,
         touchStartY: 0,
@@ -39,6 +39,7 @@
             'Políticas e Procedimentos',
             'GECOI — Controle Interno',
             'Frentes Estratégicas — GECOI',
+            'Torre de Controle — Projeto em Destaque',
             'GECONF — Conformidade',
             'Frentes Estratégicas — GECONF',
             'GDICE — Dados e Inteligência',
