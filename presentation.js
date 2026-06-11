@@ -210,10 +210,16 @@
         const conflictBtn = document.createElement('button');
         conflictBtn.type = 'button';
         conflictBtn.className = 'orgmap-legend__item orgmap-legend__item--conflict';
-        conflictBtn.innerHTML = '&#9888; Potenciais conflitos';
+        conflictBtn.innerHTML = '&#9888; Pontos de Atenção';
         conflictBtn.addEventListener('click', () => {
-            root.classList.toggle('show-conflicts');
-            conflictBtn.classList.toggle('active', root.classList.contains('show-conflicts'));
+            const turningOn = !root.classList.contains('show-conflicts');
+            // 1) primeiro zera qualquer filtro de papel ativo (volta ao estado "none")
+            if (turningOn && root.dataset.filter) {
+                setOrgFilter(root, root.dataset.filter);
+            }
+            // 2) depois aplica (ou remove) o realce de Pontos de Atenção
+            root.classList.toggle('show-conflicts', turningOn);
+            conflictBtn.classList.toggle('active', turningOn);
         });
         legend.appendChild(conflictBtn);
         root.appendChild(legend);
@@ -227,10 +233,6 @@
             top.appendChild(pill);
         });
         root.appendChild(top);
-
-        const veil = document.createElement('div');
-        veil.className = 'orgmap-veil';
-        root.appendChild(veil);
 
         const grid = document.createElement('div');
         grid.className = 'orgmap-grid';
@@ -282,8 +284,14 @@
     function setOrgFilter(root, role) {
         const current = root.dataset.filter;
         const next = current === role ? '' : role;
-        if (next) root.dataset.filter = next;
-        else delete root.dataset.filter;
+        if (next) {
+            root.dataset.filter = next;
+            // ao escolher um papel, desliga o realce de Pontos de Atenção (modos exclusivos)
+            root.classList.remove('show-conflicts');
+            root.querySelector('.orgmap-legend__item--conflict')?.classList.remove('active');
+        } else {
+            delete root.dataset.filter;
+        }
 
         root.querySelectorAll('.orgmap-legend__item[data-role]').forEach((btn) => {
             btn.classList.toggle('active', btn.dataset.role === next);
@@ -433,11 +441,13 @@
             ? 'translateX(90px) rotateY(-5deg) scale(0.95)'
             : 'translateX(-90px) rotateY(5deg) scale(0.95)';
         nextSlideEl.style.opacity = '0';
+        nextSlideEl.style.filter = 'blur(10px)';
 
         requestAnimationFrame(() => {
             nextSlideEl.classList.add('active');
             nextSlideEl.style.transform = '';
             nextSlideEl.style.opacity = '';
+            nextSlideEl.style.filter = '';
         });
 
         state.current = target;
