@@ -21,16 +21,147 @@
         overviewGrid: document.querySelector('.overview-grid'),
     };
 
-    const TRANSITION_DURATION = 800;
+    const TRANSITION_DURATION = 1200;
     const FEATURED_VIDEO_VOLUME = 0.7;
 
     function init() {
         dom.totalSlides.textContent = state.total;
         buildOverview();
         buildOrgMap();
+        initKineticTitles();
+        initIntro();
+        initParticles();
         bindEvents();
         bindNormaSoundButton();
         updateUI();
+        updateParticlesVisibility();
+    }
+
+    /* ── Intro cinematográfica (logo reveal) ─────────────────── */
+    function initIntro() {
+        const overlay = document.getElementById('intro-overlay');
+        if (!overlay) {
+            document.body.classList.remove('intro-active');
+            return;
+        }
+        const video = overlay.querySelector('#intro-video');
+        const skip = overlay.querySelector('#intro-skip');
+
+        const end = () => {
+            if (overlay.classList.contains('intro-done')) return;
+            overlay.classList.add('intro-done');
+            document.body.classList.remove('intro-active');
+            setTimeout(() => overlay.remove(), 1400);
+        };
+
+        video.addEventListener('ended', end);
+        video.addEventListener('error', end);
+        skip.addEventListener('click', end);
+        setTimeout(end, 12000);
+
+        video.play().catch(end);
+    }
+
+    /* ── Kinetic typography: títulos palavra a palavra ───────── */
+    function initKineticTitles() {
+        document.querySelectorAll('.slide__title').forEach((title) => {
+            const frag = document.createDocumentFragment();
+            let i = 0;
+            const wrap = (content) => {
+                const span = document.createElement('span');
+                span.className = 'kw';
+                span.style.setProperty('--i', i++);
+                if (typeof content === 'string') span.textContent = content;
+                else span.appendChild(content);
+                return span;
+            };
+            Array.from(title.childNodes).forEach((node) => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    node.textContent.split(/(\s+)/).forEach((part) => {
+                        if (!part) return;
+                        if (/^\s+$/.test(part)) frag.appendChild(document.createTextNode(' '));
+                        else frag.appendChild(wrap(part));
+                    });
+                } else if (node.nodeName === 'BR') {
+                    frag.appendChild(document.createElement('br'));
+                } else if (node.classList?.contains('slide__title-note')) {
+                    frag.appendChild(node.cloneNode(true));
+                } else {
+                    frag.appendChild(wrap(node.cloneNode(true)));
+                }
+            });
+            title.textContent = '';
+            title.appendChild(frag);
+        });
+    }
+
+    /* ── Partículas douradas flutuantes ──────────────────────── */
+    let particlesCanvas = null;
+    function initParticles() {
+        particlesCanvas = document.getElementById('gold-particles');
+        if (!particlesCanvas) return;
+        const ctx = particlesCanvas.getContext('2d');
+        let particles = [];
+
+        const resize = () => {
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = window.innerHeight;
+        };
+        resize();
+        window.addEventListener('resize', resize);
+
+        const COUNT = 48;
+        const spawn = (randomY) => ({
+            x: Math.random() * particlesCanvas.width,
+            y: randomY ? Math.random() * particlesCanvas.height : particlesCanvas.height + 10,
+            r: 0.6 + Math.random() * 1.8,
+            speed: 0.12 + Math.random() * 0.35,
+            sway: 12 + Math.random() * 30,
+            phase: Math.random() * Math.PI * 2,
+            alpha: 0.08 + Math.random() * 0.22,
+        });
+        for (let i = 0; i < COUNT; i++) particles.push(spawn(true));
+
+        const frame = (t) => {
+            ctx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+            particles.forEach((p, idx) => {
+                p.y -= p.speed;
+                if (p.y < -12) particles[idx] = spawn(false);
+                const x = p.x + Math.sin(t * 0.00045 + p.phase) * p.sway;
+                const twinkle = 0.6 + 0.4 * Math.sin(t * 0.0012 + p.phase * 3);
+                ctx.beginPath();
+                ctx.arc(x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 176, 106, ${(p.alpha * twinkle).toFixed(3)})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(frame);
+        };
+        requestAnimationFrame(frame);
+    }
+
+    function updateParticlesVisibility() {
+        if (!particlesCanvas) return;
+        const slide = dom.slides[state.current - 1];
+        const isLight = !!slide?.querySelector('.slide__bg--light');
+        particlesCanvas.classList.toggle('particles-off', isLight);
+    }
+
+    /* ── Contadores animados (Estrutura) ─────────────────────── */
+    function animateCounters(slideEl) {
+        slideEl.querySelectorAll('.stat-number').forEach((el) => {
+            if (!el.dataset.target) el.dataset.target = el.textContent.trim();
+            const target = parseInt(el.dataset.target, 10);
+            if (!Number.isFinite(target)) return;
+            const duration = 1400;
+            const start = performance.now();
+            const tick = (now) => {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(target * eased);
+                if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        });
     }
 
     /* ── Organograma interativo ───────────────────────────────── */
@@ -123,14 +254,19 @@
         });
         root.appendChild(top);
 
+        const veil = document.createElement('div');
+        veil.className = 'orgmap-veil';
+        root.appendChild(veil);
+
         const grid = document.createElement('div');
         grid.className = 'orgmap-grid';
-        ORG_DIRS.forEach((dir) => {
+        ORG_DIRS.forEach((dir, dirIndex) => {
             const roles = [...new Set(dir.units.map((u) => u.role).filter(Boolean))];
             const hasConflict = roles.length > 1;
 
             const card = document.createElement('div');
             card.className = 'orgmap-dir';
+            card.style.setProperty('--i', dirIndex);
             if (hasConflict) {
                 card.dataset.conflict = 'true';
                 card.title = `Atenção: ${roles.map((r) => ORG_ROLES[r].label.replace('*', '')).join(' + ')} na mesma diretoria — potencial conflito`;
@@ -141,9 +277,11 @@
             head.innerHTML = `<strong>${dir.id}</strong><span>${dir.name}</span><em>${dir.head}</em>`;
             card.appendChild(head);
 
-            dir.units.forEach((unit) => {
+            dir.units.forEach((unit, unitIndex) => {
                 const chip = document.createElement('div');
                 chip.className = 'orgmap-unit';
+                chip.style.setProperty('--i', dirIndex);
+                chip.style.setProperty('--j', unitIndex);
                 if (unit.role) {
                     chip.dataset.role = unit.role;
                     chip.style.setProperty('--unit-color', ORG_ROLES[unit.role].color);
@@ -285,7 +423,7 @@
 
         wheelTimeout = setTimeout(() => {
             wheelTimeout = null;
-        }, 800);
+        }, 1100);
 
         if (e.deltaY > 30) nextSlide();
         else if (e.deltaY < -30) prevSlide();
@@ -315,9 +453,10 @@
         currentSlideEl.classList.add(dir === 'next' ? 'exit-left' : 'exit-right');
 
         nextSlideEl.classList.remove('exit-left', 'exit-right');
+        nextSlideEl.dataset.enter = dir;
         nextSlideEl.style.transform = dir === 'next'
-            ? 'translateX(60px) scale(0.97)'
-            : 'translateX(-60px) scale(0.97)';
+            ? 'translateX(90px) rotateY(-5deg) scale(0.95)'
+            : 'translateX(-90px) rotateY(5deg) scale(0.95)';
         nextSlideEl.style.opacity = '0';
 
         requestAnimationFrame(() => {
@@ -329,6 +468,10 @@
         state.current = target;
         updateUI();
         handleSlideMedia(target);
+        updateParticlesVisibility();
+        if (nextSlideEl.querySelector('.org-stats')) {
+            setTimeout(() => animateCounters(nextSlideEl), 400);
+        }
 
         setTimeout(() => {
             currentSlideEl.classList.remove('exit-left', 'exit-right');

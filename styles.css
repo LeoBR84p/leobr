@@ -20,6 +20,8 @@
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
     --transition-premium: cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-cinema: cubic-bezier(0.16, 1, 0.3, 1);
+    --slide-duration: 1.2s;
     --shadow-luxury: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(184, 148, 79, 0.05);
     --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(184, 148, 79, 0.08);
     --shadow-gold: 0 8px 40px rgba(184, 148, 79, 0.2), 0 0 80px rgba(184, 148, 79, 0.05);
@@ -204,9 +206,11 @@ html, body {
     width: 100%;
     height: 100%;
     position: relative;
+    perspective: 1800px;
+    perspective-origin: 50% 50%;
 }
 
-/* Slides */
+/* Slides — transições 3D com blur de movimento */
 .slide {
     position: absolute;
     inset: 0;
@@ -215,27 +219,62 @@ html, body {
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transform: translateX(80px) scale(0.96);
-    transition: opacity 1s var(--transition-premium),
-                transform 1s var(--transition-premium),
-                visibility 1s;
-    will-change: transform, opacity;
+    transform: translateX(90px) rotateY(-5deg) scale(0.95);
+    filter: blur(10px);
+    transition: opacity var(--slide-duration) var(--transition-cinema),
+                transform var(--slide-duration) var(--transition-cinema),
+                filter var(--slide-duration) var(--transition-cinema),
+                visibility var(--slide-duration);
+    will-change: transform, opacity, filter;
 }
 
 .slide.active {
     opacity: 1;
     visibility: visible;
-    transform: translateX(0) scale(1);
+    transform: translateX(0) rotateY(0deg) scale(1);
+    filter: blur(0);
 }
 
 .slide.exit-left {
     opacity: 0;
-    transform: translateX(-80px) scale(0.96);
+    transform: translateX(-10%) rotateY(7deg) scale(0.93);
+    filter: blur(10px);
 }
 
 .slide.exit-right {
     opacity: 0;
-    transform: translateX(80px) scale(0.96);
+    transform: translateX(10%) rotateY(-7deg) scale(0.93);
+    filter: blur(10px);
+}
+
+/* Parallax em camadas — conteúdo desloca mais que o fundo */
+.slide__content {
+    transition: opacity var(--slide-duration) var(--transition-cinema),
+                transform var(--slide-duration) var(--transition-cinema);
+}
+
+.slide:not(.active) .slide__content {
+    opacity: 0;
+    transform: translateX(55px);
+}
+
+.slide:not(.active)[data-enter="prev"] .slide__content {
+    transform: translateX(-55px);
+}
+
+.slide.exit-left .slide__content {
+    opacity: 0;
+    transform: translateX(-55px);
+}
+
+.slide.exit-right .slide__content {
+    opacity: 0;
+    transform: translateX(55px);
+}
+
+.slide.active .slide__content {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* Slide Backgrounds */
@@ -1925,7 +1964,7 @@ html, body {
 }
 
 .orgmap-root.show-conflicts .orgmap-dir:not([data-conflict="true"]) {
-    opacity: 0.45;
+    filter: grayscale(0.6) opacity(0.4);
 }
 
 .orgmap-dir__alert {
@@ -1971,6 +2010,250 @@ html, body {
     }
 }
 
+/* ── Intro Cinematográfica ──────────────────────────────────── */
+#intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1.2s var(--transition-cinema), visibility 1.2s;
+}
+
+#intro-overlay.intro-done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#intro-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#intro-skip {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(15, 29, 56, 0.2);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    color: var(--color-text-dark);
+    font-family: var(--font-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeInUp 0.6s var(--transition-premium) 1.5s both;
+    transition: all 0.3s var(--transition-premium);
+}
+
+#intro-skip:hover {
+    background: var(--color-text-dark);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Segura as animações do slide 1 enquanto a intro roda */
+body.intro-active .slide--title .title-card > * {
+    animation-play-state: paused;
+}
+
+body.intro-active .slide--title .slide__bg-img {
+    transition: none;
+}
+
+/* Zoom lento no título após a intro (cross-fade hero reveal) */
+.title-card__heading {
+    transform-origin: center;
+}
+
+body:not(.intro-active) .slide--title.active .title-card__heading {
+    animation: fadeInUp 1s var(--transition-premium) 0.5s both,
+               heroZoom 8s var(--transition-cinema) 0.5s both;
+}
+
+@keyframes heroZoom {
+    from { letter-spacing: 0.04em; }
+    to { letter-spacing: -0.02em; }
+}
+
+/* ── Kinetic Typography (títulos palavra a palavra) ─────────── */
+.slide__title .kw {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.7em);
+    clip-path: inset(-10% -10% 110% -10%);
+}
+
+.slide.active .slide__title .kw {
+    animation: kwReveal 0.8s var(--transition-cinema) both;
+    animation-delay: calc(0.3s + var(--i, 0) * 0.07s);
+}
+
+.slide__title .slide__title-note {
+    opacity: 0;
+}
+
+.slide.active .slide__title .slide__title-note {
+    animation: fadeInUp 0.8s var(--transition-cinema) 0.9s both;
+}
+
+@keyframes kwReveal {
+    from {
+        opacity: 0;
+        transform: translateY(0.7em);
+        clip-path: inset(-10% -10% 110% -10%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        clip-path: inset(-10% -10% -10% -10%);
+    }
+}
+
+/* ── Partículas Douradas ────────────────────────────────────── */
+#gold-particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 90;
+    mix-blend-mode: screen;
+    opacity: 1;
+    transition: opacity 1.2s var(--transition-cinema);
+}
+
+#gold-particles.particles-off {
+    opacity: 0;
+}
+
+/* ── Flash tecnológico (Projetos em Destaque) ───────────────── */
+.slide--norma-ai::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    bottom: -10%;
+    left: 0;
+    width: 55%;
+    background: linear-gradient(100deg,
+        transparent 0%,
+        rgba(232, 201, 110, 0.12) 38%,
+        rgba(255, 255, 255, 0.32) 50%,
+        rgba(232, 201, 110, 0.12) 62%,
+        transparent 100%);
+    transform: translateX(-130%) skewX(-14deg);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 6;
+}
+
+.slide--norma-ai.active::after {
+    animation: techSweep 1.1s cubic-bezier(0.7, 0, 0.3, 1) 0.25s both;
+}
+
+@keyframes techSweep {
+    0% { opacity: 0; transform: translateX(-130%) skewX(-14deg); }
+    12% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(320%) skewX(-14deg); }
+}
+
+/* ── Organograma: entrada orquestrada em cascata ────────────── */
+.slide--orgmap .orgmap-dir {
+    opacity: 0;
+}
+
+.slide--orgmap.active .orgmap-dir {
+    opacity: 1;
+    animation: orgDirIn 0.65s var(--transition-cinema) both;
+    animation-delay: calc(0.25s + var(--i, 0) * 0.08s);
+}
+
+@keyframes orgDirIn {
+    from { opacity: 0; transform: translateY(26px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.slide--orgmap .orgmap-unit::before {
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+.slide--orgmap.active .orgmap-unit::before {
+    animation: orgBarPaint 0.55s var(--transition-cinema) both;
+    animation-delay: calc(0.8s + var(--i, 0) * 0.08s + var(--j, 0) * 0.1s);
+}
+
+@keyframes orgBarPaint {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+.slide--orgmap .orgmap-legend,
+.slide--orgmap .orgmap-top {
+    opacity: 0;
+}
+
+.slide--orgmap.active .orgmap-legend {
+    animation: fadeInUp 0.6s var(--transition-cinema) 0.15s both;
+}
+
+.slide--orgmap.active .orgmap-top {
+    animation: fadeInUp 0.6s var(--transition-cinema) 0.3s both;
+}
+
+/* ── Organograma: spotlight no modo conflitos ───────────────── */
+.orgmap-veil {
+    position: fixed;
+    inset: -5%;
+    background: radial-gradient(ellipse at 50% 45%, rgba(7, 13, 26, 0.5) 0%, rgba(7, 13, 26, 0.72) 100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s var(--transition-cinema);
+    z-index: 4;
+}
+
+.orgmap-root.show-conflicts .orgmap-veil {
+    opacity: 1;
+}
+
+.orgmap-legend {
+    position: relative;
+    z-index: 6;
+}
+
+.orgmap-root.show-conflicts .orgmap-dir[data-conflict="true"] {
+    z-index: 6;
+}
+
+/* ── Acessibilidade: movimento reduzido ─────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .slide,
+    .slide__content {
+        transition-duration: 0.01s;
+    }
+
+    .slide.active .slide__title .kw,
+    .slide--norma-ai.active::after,
+    .slide--orgmap.active .orgmap-dir,
+    .slide--orgmap.active .orgmap-unit::before {
+        animation-duration: 0.01s;
+        animation-delay: 0s;
+    }
+
+    #gold-particles {
+        display: none;
+    }
+}
+
 /* Print styles */
 @media print {
     .slide {
@@ -1978,11 +2261,26 @@ html, body {
         opacity: 1;
         visibility: visible;
         transform: none;
+        filter: none;
         page-break-after: always;
         min-height: 100vh;
     }
 
-    #nav-controls, #btn-overview, #progress-bar, #slide-counter {
+    .slide .slide__content {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .slide .slide__title .kw,
+    .slide .orgmap-dir,
+    .slide .orgmap-legend,
+    .slide .orgmap-top {
+        opacity: 1 !important;
+        transform: none !important;
+        clip-path: none !important;
+    }
+
+    #nav-controls, #btn-overview, #progress-bar, #slide-counter, #gold-particles, #intro-overlay {
         display: none;
     }
 }
