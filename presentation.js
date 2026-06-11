@@ -3,7 +3,7 @@
 
     const state = {
         current: 1,
-        total: 17,
+        total: 14,
         animating: false,
         touchStartX: 0,
         touchStartY: 0,
@@ -27,9 +27,161 @@
     function init() {
         dom.totalSlides.textContent = state.total;
         buildOverview();
+        buildOrgMap();
         bindEvents();
         bindNormaSoundButton();
         updateUI();
+    }
+
+    /* ── Organograma interativo ───────────────────────────────── */
+    const ORG_ROLES = {
+        investidor: { label: 'Investidor', color: '#2e8b86' },
+        credor: { label: 'Credor', color: '#dfa733' },
+        servicos: { label: 'Prestação de Serviços', color: '#6c3fa5' },
+        devedor: { label: 'Devedor', color: '#e23a2e' },
+        controle: { label: 'Camadas de Controle*', color: '#2f3640' },
+    };
+
+    const ORG_DIRS = [
+        { id: 'DIR 1', name: 'Pessoas, TI e Operações', head: 'Helena Tenório', units: [
+            { sigla: 'ARH', nome: 'Recursos Humanos', role: null },
+            { sigla: 'ATI', nome: 'Tecnologia da Informação', role: null },
+            { sigla: 'ASN', nome: 'Suporte ao Negócio', role: 'controle' },
+        ]},
+        { id: 'DIR 2', name: 'Socioambiental', head: 'Tereza Campello', units: [
+            { sigla: 'AS', nome: 'Desenvolvimento Social e Gestão Pública', role: 'credor' },
+            { sigla: 'AMA', nome: 'Meio Ambiente', role: 'credor' },
+        ]},
+        { id: 'DIR 3', name: 'Financeira e de Mercado de Capitais', head: 'Alexandre Abreu', units: [
+            { sigla: 'AF', nome: 'Financeira', role: 'investidor' },
+            { sigla: 'ACO', nome: 'Controladoria', role: 'controle' },
+            { sigla: 'AMC', nome: 'Mercado de Capitais, Investimentos e Participações', role: 'investidor' },
+        ]},
+        { id: 'DIR 4', name: 'Crédito Digital para MPMEs e Gestão do Fundo Rio Doce', head: 'Maria Fernanda', units: [
+            { sigla: 'ADIG', nome: 'Operações e Canais Digitais', role: 'credor' },
+            { sigla: 'Fundo Rio Doce', nome: 'Enfrentamento de Eventos Extremos e Gestão do Fundo Rio Doce', role: 'credor' },
+        ]},
+        { id: 'DIR 5', name: 'Infraestrutura e Mudança Climática', head: 'Luciana Costa', units: [
+            { sigla: 'AINFRA', nome: 'Infraestrutura', role: 'credor' },
+            { sigla: 'AEC', nome: 'Transição Energética e Clima', role: 'credor' },
+        ]},
+        { id: 'DIR 6', name: 'Jurídica', head: 'Walter Baère', units: [
+            { sigla: 'AJI', nome: 'Jurídica Institucional', role: 'controle' },
+            { sigla: 'AJN', nome: 'Jurídica de Negócios', role: null },
+        ]},
+        { id: 'DIR 7', name: 'Desenvolvimento Produtivo, Inovação e Comércio Exterior', head: 'José Luis Gordon', units: [
+            { sigla: 'AI', nome: 'Desenvolvimento Produtivo e Inovação', role: 'credor' },
+            { sigla: 'AEX', nome: 'Comércio Exterior', role: 'credor' },
+        ]},
+        { id: 'DIR 8', name: 'Planejamento e Relações Institucionais', head: 'Nelson Barbosa', units: [
+            { sigla: 'ASC', nome: 'Soluções para Cidades', role: 'servicos' },
+            { sigla: 'ASI', nome: 'Soluções de Infraestrutura', role: 'servicos' },
+            { sigla: 'AP', nome: 'Planejamento e Pesquisa Econômica', role: null },
+            { sigla: 'AINT', nome: 'Internacional e de Captação de Recursos', role: 'devedor' },
+        ]},
+        { id: 'DIR 9', name: 'Risco e Compliance', head: 'Jean Uema', units: [
+            { sigla: 'AGR', nome: 'Gestão de Riscos', role: 'controle' },
+            { sigla: 'AIC', nome: 'Integridade e Compliance', role: 'controle' },
+        ]},
+    ];
+
+    const ORG_TOP = ['Conselho de Administração', 'Auditoria Interna', 'Ouvidoria', 'Presidência', 'Gabinete da Presidência (GP)', 'ARMC', 'SET'];
+
+    function buildOrgMap() {
+        const root = document.getElementById('orgmap-root');
+        if (!root) return;
+
+        const legend = document.createElement('div');
+        legend.className = 'orgmap-legend';
+        Object.entries(ORG_ROLES).forEach(([key, meta]) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'orgmap-legend__item';
+            btn.dataset.role = key;
+            btn.innerHTML = `<span class="orgmap-swatch" style="background:${meta.color}"></span>${meta.label}`;
+            btn.addEventListener('click', () => setOrgFilter(root, key));
+            legend.appendChild(btn);
+        });
+        const conflictBtn = document.createElement('button');
+        conflictBtn.type = 'button';
+        conflictBtn.className = 'orgmap-legend__item orgmap-legend__item--conflict';
+        conflictBtn.innerHTML = '&#9888; Potenciais conflitos';
+        conflictBtn.addEventListener('click', () => {
+            root.classList.toggle('show-conflicts');
+            conflictBtn.classList.toggle('active', root.classList.contains('show-conflicts'));
+        });
+        legend.appendChild(conflictBtn);
+        root.appendChild(legend);
+
+        const top = document.createElement('div');
+        top.className = 'orgmap-top';
+        ORG_TOP.forEach((name) => {
+            const pill = document.createElement('span');
+            pill.className = `orgmap-top__pill${name === 'Presidência' ? ' orgmap-top__pill--main' : ''}`;
+            pill.textContent = name;
+            top.appendChild(pill);
+        });
+        root.appendChild(top);
+
+        const grid = document.createElement('div');
+        grid.className = 'orgmap-grid';
+        ORG_DIRS.forEach((dir) => {
+            const roles = [...new Set(dir.units.map((u) => u.role).filter(Boolean))];
+            const hasConflict = roles.length > 1;
+
+            const card = document.createElement('div');
+            card.className = 'orgmap-dir';
+            if (hasConflict) {
+                card.dataset.conflict = 'true';
+                card.title = `Atenção: ${roles.map((r) => ORG_ROLES[r].label.replace('*', '')).join(' + ')} na mesma diretoria — potencial conflito`;
+            }
+
+            const head = document.createElement('div');
+            head.className = 'orgmap-dir__head';
+            head.innerHTML = `<strong>${dir.id}</strong><span>${dir.name}</span><em>${dir.head}</em>`;
+            card.appendChild(head);
+
+            dir.units.forEach((unit) => {
+                const chip = document.createElement('div');
+                chip.className = 'orgmap-unit';
+                if (unit.role) {
+                    chip.dataset.role = unit.role;
+                    chip.style.setProperty('--unit-color', ORG_ROLES[unit.role].color);
+                    chip.title = `${unit.nome} — papel: ${ORG_ROLES[unit.role].label.replace('*', '')}`;
+                } else {
+                    chip.title = unit.nome;
+                }
+                chip.innerHTML = `<strong>${unit.sigla}</strong><span>${unit.nome}</span>`;
+                card.appendChild(chip);
+            });
+
+            if (hasConflict) {
+                const alert = document.createElement('div');
+                alert.className = 'orgmap-dir__alert';
+                alert.innerHTML = `&#9888; ${roles.map((r) => ORG_ROLES[r].label.replace('*', '')).join(' + ')}`;
+                card.appendChild(alert);
+            }
+
+            grid.appendChild(card);
+        });
+        root.appendChild(grid);
+    }
+
+    function setOrgFilter(root, role) {
+        const current = root.dataset.filter;
+        const next = current === role ? '' : role;
+        if (next) root.dataset.filter = next;
+        else delete root.dataset.filter;
+
+        root.querySelectorAll('.orgmap-legend__item[data-role]').forEach((btn) => {
+            btn.classList.toggle('active', btn.dataset.role === next);
+        });
+        root.querySelectorAll('.orgmap-unit').forEach((chip) => {
+            chip.classList.remove('match', 'dim');
+            if (next) {
+                chip.classList.add(chip.dataset.role === next ? 'match' : 'dim');
+            }
+        });
     }
 
     function buildOverview() {
@@ -37,17 +189,14 @@
             'Departamento de Controle Interno',
             'Estrutura AIC/DECOI',
             'Políticas e Procedimentos',
-            'GECOI — Controle Interno',
-            'Frentes Estratégicas — GECOI',
+            'GECOI — Gerência de Controle Interno',
             'Torre de Controle — Projeto em Destaque',
-            'GECONF — Conformidade',
-            'Frentes Estratégicas — GECONF',
-            'GDICE — Dados e Inteligência',
-            'Novas Iniciativas — GDICE',
-            'UCON — Controle',
-            'Frentes Estratégicas — UCON',
-            'GEMOD — Risco de Modelo',
-            'Formas de Atuação — GEMOD',
+            'GECONF — Gerência de Conformidade',
+            'GEDICE — Gestão de Dados e Inteligência',
+            'UCON — Unidade de Controle',
+            'Above the Wall no BNDES',
+            'Organograma — Papéis e Conflitos',
+            'GEMOD — Gestão de Risco de Modelo',
             'Norma.AI — Projeto em Destaque',
             'CNPJ Alfanumérico — Projeto em Destaque',
             'Obrigado',
