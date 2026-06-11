@@ -3,7 +3,7 @@
 
     const state = {
         current: 1,
-        total: 14,
+        total: 15,
         animating: false,
         touchStartX: 0,
         touchStartY: 0,
@@ -303,6 +303,7 @@
             'Políticas e Procedimentos',
             'GECOI — Gerência de Controle Interno',
             'Torre de Controle — Projeto em Destaque',
+            'IA na Torre de Controle — Detecção de Atipicidades',
             'GECONF — Gerência de Conformidade',
             'GEDICE — Gestão de Dados e Inteligência',
             'UCON — Unidade de Controle',

@@ -7,12 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260611c">
+    <link rel="stylesheet" href="styles.css?v=20260611d">
 </head>
 <body>
     <canvas id="gold-particles" aria-hidden="true"></canvas>
     <div id="progress-bar"></div>
-    <div id="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">14</span></div>
+    <div id="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">15</span></div>
 
     <nav id="nav-controls">
         <button id="btn-prev" aria-label="Slide anterior">
@@ -190,12 +190,6 @@
                         <div class="front-detail" data-delay="300">Relatório de Avaliação e Acompanhamento da efetividade da PLDFT (RAAE)</div>
                         <div class="front-detail" data-delay="400">Implementação da atividade de avaliação contínua da Qualidade da Informação prestada ao BCB</div>
                         <div class="front-detail" data-delay="500">Estruturando o Monitoramento dos CADOCs (Tempestividade e Qualidade)</div>
-                        <div class="front-group" data-delay="600">
-                            <h4 class="front-group__title">Implementação da Torre de Controle</h4>
-                            <div class="front-detail">Design de fluxos de automação de dados com apoio dos Cientistas de dados</div>
-                            <div class="front-detail">Fase piloto de monitoramento baseado em dados para identificação de situações atípicas</div>
-                            <div class="front-detail">Evolução para criação sistematizada de indicadores de efetividade da PLDFT</div>
-                        </div>
                     </div>
                     </div>
                     <aside class="slide5-torre-card" data-delay="100" aria-label="Torre de Controle">
@@ -259,8 +253,70 @@
             </div>
         </section>
 
-        <!-- Slide 6: GECONF -->
-        <section class="slide slide--fronts" data-slide="6">
+        <!-- Slide 6: Torre de Controle — Métodos de IA -->
+        <section class="slide slide--torre-ia" data-slide="6">
+            <div class="slide__bg">
+                <div class="slide__bg--gradient-mesh"></div>
+            </div>
+            <div class="slide__content slide__content--torre-ia">
+                <div class="torre-ia__header">
+                    <h2 class="slide__title">IA na Torre de Controle</h2>
+                    <p class="torre-ia__subtitle">Aprendizado de máquina profundo para identificação de situações atípicas — pilares <strong>Contábil</strong> e <strong>Financeiro</strong></p>
+                </div>
+                <div class="torre-ia__pipeline">
+                    <div class="torre-step" data-delay="100">
+                        <span class="torre-step__num">1</span>
+                        <div class="torre-step__icon">
+                            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h18l-7 8v6l-4 2v-8L3 4z"/></svg>
+                        </div>
+                        <h3>Volume Extremo</h3>
+                        <p class="torre-step__highlight">20 milhões<span>de registros por janela</span></p>
+                        <p>A conferência manual é inviável: a priorização passa a ser matemática. É o fim da "agulha no palheiro".</p>
+                    </div>
+                    <div class="torre-step" data-delay="200">
+                        <span class="torre-step__num">2</span>
+                        <div class="torre-step__icon">
+                            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2z"/><path d="M12 2v9m0 0l8 4.5M12 11L4 15.5"/><circle cx="12" cy="11" r="1" fill="currentColor"/><circle cx="8" cy="7" r="1" fill="currentColor"/><circle cx="16" cy="14" r="1" fill="currentColor"/></svg>
+                        </div>
+                        <h3>Fundação Matemática</h3>
+                        <p class="torre-step__highlight">Embeddings<span>geometria de 10 dimensões</span></p>
+                        <p>Cada lançamento vira coordenadas em um espaço vetorial: comportamentos típicos formam "bairros densos" — e anomalias não têm onde se esconder.</p>
+                    </div>
+                    <div class="torre-step" data-delay="300">
+                        <span class="torre-step__num">3</span>
+                        <div class="torre-step__icon">
+                            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2.5"/><path d="M12 9.5V4M12 14.5V20M9.5 12H4M14.5 12H20M10.2 10.2L6.3 6.3M13.8 13.8l3.9 3.9M13.8 10.2l3.9-3.9M10.2 13.8l-3.9 3.9"/></svg>
+                        </div>
+                        <h3>Quórum de Algoritmos</h3>
+                        <p class="torre-step__highlight">15 lentes<span>especializadas em paralelo</span></p>
+                        <p>Famílias de algoritmos analisam por prismas diferentes. Só há alerta quando múltiplos métodos concordam — eliminando falsos positivos.</p>
+                    </div>
+                    <div class="torre-step" data-delay="400">
+                        <span class="torre-step__num">4</span>
+                        <div class="torre-step__icon">
+                            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-9 8.4 8.5 8.5 0 01-3.4-.7L3 21l1.8-5.6a8.38 8.38 0 01-.8-3.9 8.5 8.5 0 018.5-8.5 8.38 8.38 0 018.5 8.5z"/><path d="M8 10h8M8 13.5h5"/></svg>
+                        </div>
+                        <h3>Explicabilidade</h3>
+                        <p class="torre-step__highlight">IA Generativa<span>a ponte para o analista</span></p>
+                        <p>Os sinais matemáticos são traduzidos em relatórios humanizados e auditáveis, explicando o porquê de cada alerta.</p>
+                    </div>
+                </div>
+                <div class="torre-ia__footer" data-delay="600">
+                    <span class="torre-ia__lenses-label">Prismas complementares</span>
+                    <div class="torre-ia__lenses">
+                        <span class="torre-ia__lens">Distância &amp; Centroides</span>
+                        <span class="torre-ia__lens">Densidade &amp; Vizinhança</span>
+                        <span class="torre-ia__lens">Isolamento</span>
+                        <span class="torre-ia__lens">Reconstrução Neural</span>
+                        <span class="torre-ia__lens">Consenso entre Famílias</span>
+                    </div>
+                    <p class="torre-ia__quote">"A matemática torna-se português claro"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: GECONF -->
+        <section class="slide slide--fronts" data-slide="7">
             <div class="slide__bg slide__bg--light">
                 <div class="slide__overlay slide__overlay--subtle"></div>
             </div>
@@ -298,8 +354,8 @@
             </div>
         </section>
 
-        <!-- Slide 7: GEDICE Iniciativas -->
-        <section class="slide slide--initiatives" data-slide="7">
+        <!-- Slide 8: GEDICE Iniciativas -->
+        <section class="slide slide--initiatives" data-slide="8">
             <div class="slide__bg slide__bg--light">
                 <div class="slide__overlay slide__overlay--subtle"></div>
             </div>
@@ -358,8 +414,8 @@
             </div>
         </section>
 
-        <!-- Slide 8: UCON -->
-        <section class="slide slide--fronts" data-slide="8">
+        <!-- Slide 9: UCON -->
+        <section class="slide slide--fronts" data-slide="9">
             <div class="slide__bg slide__bg--light">
                 <div class="slide__overlay slide__overlay--subtle"></div>
             </div>
@@ -397,8 +453,8 @@
             </div>
         </section>
 
-        <!-- Slide 9: Above the Wall -->
-        <section class="slide slide--atw" data-slide="9">
+        <!-- Slide 10: Above the Wall -->
+        <section class="slide slide--atw" data-slide="10">
             <div class="slide__bg">
                 <div class="slide__bg--gradient-mesh"></div>
             </div>
@@ -438,8 +494,8 @@
             </div>
         </section>
 
-        <!-- Slide 10: Organograma Interativo -->
-        <section class="slide slide--orgmap" data-slide="10">
+        <!-- Slide 11: Organograma Interativo -->
+        <section class="slide slide--orgmap" data-slide="11">
             <div class="slide__bg slide__bg--light">
                 <div class="slide__overlay slide__overlay--subtle"></div>
             </div>
@@ -451,8 +507,8 @@
             </div>
         </section>
 
-        <!-- Slide 11: GEMOD -->
-        <section class="slide slide--fronts" data-slide="11">
+        <!-- Slide 12: GEMOD -->
+        <section class="slide slide--fronts" data-slide="12">
             <div class="slide__bg slide__bg--light">
                 <div class="slide__overlay slide__overlay--subtle"></div>
             </div>
@@ -491,8 +547,8 @@
             </div>
         </section>
 
-        <!-- Slide 12: Norma.AI Destaque -->
-        <section class="slide slide--norma-ai" data-slide="12">
+        <!-- Slide 13: Norma.AI Destaque -->
+        <section class="slide slide--norma-ai" data-slide="13">
             <div class="slide__bg">
                 <div class="norma-ai__bg"></div>
                 <div class="norma-ai__grid"></div>
@@ -544,8 +600,8 @@
             </div>
         </section>
 
-        <!-- Slide 13: CNPJ Alfanumérico Destaque -->
-        <section class="slide slide--norma-ai slide--cnpj" data-slide="13">
+        <!-- Slide 14: CNPJ Alfanumérico Destaque -->
+        <section class="slide slide--norma-ai slide--cnpj" data-slide="14">
             <div class="slide__bg">
                 <div class="norma-ai__bg"></div>
                 <div class="norma-ai__grid"></div>
@@ -597,8 +653,8 @@
             </div>
         </section>
 
-        <!-- Slide 14: Encerramento -->
-        <section class="slide slide--closing" data-slide="14">
+        <!-- Slide 15: Encerramento -->
+        <section class="slide slide--closing" data-slide="15">
             <div class="slide__bg">
                 <img src="images/slide1_img0.jpg" alt="Background" class="slide__bg-img">
                 <div class="slide__overlay slide__overlay--dark"></div>
@@ -615,6 +671,6 @@
         </section>
     </main>
 
-    <script src="presentation.js?v=20260611c"></script>
+    <script src="presentation.js?v=20260611d"></script>
 </body>
 </html>
