@@ -2010,80 +2010,6 @@ html, body {
     }
 }
 
-/* ── Intro Cinematográfica ──────────────────────────────────── */
-#intro-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 1.2s var(--transition-cinema), visibility 1.2s;
-}
-
-#intro-overlay.intro-done {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-#intro-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-#intro-skip {
-    position: absolute;
-    bottom: 2.5rem;
-    right: 2.5rem;
-    padding: 0.6rem 1.4rem;
-    border-radius: 2rem;
-    border: 1px solid rgba(15, 29, 56, 0.2);
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    color: var(--color-text-dark);
-    font-family: var(--font-primary);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    opacity: 0;
-    animation: fadeInUp 0.6s var(--transition-premium) 1.5s both;
-    transition: all 0.3s var(--transition-premium);
-}
-
-#intro-skip:hover {
-    background: var(--color-text-dark);
-    color: #ffffff;
-    transform: translateY(-2px);
-}
-
-/* Segura as animações do slide 1 enquanto a intro roda */
-body.intro-active .slide--title .title-card > * {
-    animation-play-state: paused;
-}
-
-body.intro-active .slide--title .slide__bg-img {
-    transition: none;
-}
-
-/* Zoom lento no título após a intro (cross-fade hero reveal) */
-.title-card__heading {
-    transform-origin: center;
-}
-
-body:not(.intro-active) .slide--title.active .title-card__heading {
-    animation: fadeInUp 1s var(--transition-premium) 0.5s both,
-               heroZoom 8s var(--transition-cinema) 0.5s both;
-}
-
-@keyframes heroZoom {
-    from { letter-spacing: 0.04em; }
-    to { letter-spacing: -0.02em; }
-}
-
 /* ── Kinetic Typography (títulos palavra a palavra) ─────────── */
 .slide__title .kw {
     display: inline-block;
@@ -2280,7 +2206,7 @@ body:not(.intro-active) .slide--title.active .title-card__heading {
         clip-path: none !important;
     }
 
-    #nav-controls, #btn-overview, #progress-bar, #slide-counter, #gold-particles, #intro-overlay {
+    #nav-controls, #btn-overview, #progress-bar, #slide-counter, #gold-particles {
         display: none;
     }
 }

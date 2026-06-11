@@ -29,37 +29,11 @@
         buildOverview();
         buildOrgMap();
         initKineticTitles();
-        initIntro();
         initParticles();
         bindEvents();
         bindNormaSoundButton();
         updateUI();
         updateParticlesVisibility();
-    }
-
-    /* ── Intro cinematográfica (logo reveal) ─────────────────── */
-    function initIntro() {
-        const overlay = document.getElementById('intro-overlay');
-        if (!overlay) {
-            document.body.classList.remove('intro-active');
-            return;
-        }
-        const video = overlay.querySelector('#intro-video');
-        const skip = overlay.querySelector('#intro-skip');
-
-        const end = () => {
-            if (overlay.classList.contains('intro-done')) return;
-            overlay.classList.add('intro-done');
-            document.body.classList.remove('intro-active');
-            setTimeout(() => overlay.remove(), 1400);
-        };
-
-        video.addEventListener('ended', end);
-        video.addEventListener('error', end);
-        skip.addEventListener('click', end);
-        setTimeout(end, 12000);
-
-        video.play().catch(end);
     }
 
     /* ── Kinetic typography: títulos palavra a palavra ───────── */
