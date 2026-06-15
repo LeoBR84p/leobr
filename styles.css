@@ -1938,6 +1938,10 @@ html, body {
     background: var(--unit-color, transparent);
 }
 
+.orgmap-unit--dual::before {
+    background: linear-gradient(90deg, var(--unit-color) 50%, var(--unit-color2) 50%);
+}
+
 .orgmap-unit:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(15, 29, 56, 0.15);

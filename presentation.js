@@ -182,7 +182,7 @@
             { sigla: 'ASC', nome: 'Soluções para Cidades', role: 'servicos' },
             { sigla: 'ASI', nome: 'Soluções de Infraestrutura', role: 'servicos' },
             { sigla: 'AP', nome: 'Planejamento e Pesquisa Econômica', role: null },
-            { sigla: 'AINT', nome: 'Internacional e de Captação de Recursos', role: 'devedor' },
+            { sigla: 'AINT', nome: 'Internacional e de Captação de Recursos', role: 'devedor', role2: 'servicos' },
         ]},
         { id: 'DIR 9', name: 'Risco e Compliance', head: 'Jean Uema', units: [
             { sigla: 'AGR', nome: 'Gestão de Riscos', role: 'controle' },
@@ -237,7 +237,7 @@
         const grid = document.createElement('div');
         grid.className = 'orgmap-grid';
         ORG_DIRS.forEach((dir, dirIndex) => {
-            const roles = [...new Set(dir.units.map((u) => u.role).filter(Boolean))];
+            const roles = [...new Set(dir.units.flatMap((u) => [u.role, u.role2]).filter(Boolean))];
             const hasConflict = roles.length > 1;
 
             const card = document.createElement('div');
@@ -261,7 +261,15 @@
                 if (unit.role) {
                     chip.dataset.role = unit.role;
                     chip.style.setProperty('--unit-color', ORG_ROLES[unit.role].color);
-                    chip.title = `${unit.nome} — papel: ${ORG_ROLES[unit.role].label.replace('*', '')}`;
+                    if (unit.role2) {
+                        chip.classList.add('orgmap-unit--dual');
+                        chip.dataset.role2 = unit.role2;
+                        chip.style.setProperty('--unit-color2', ORG_ROLES[unit.role2].color);
+                        const labels = [unit.role, unit.role2].map((r) => ORG_ROLES[r].label.replace('*', '')).join(' + ');
+                        chip.title = `${unit.nome} — papéis: ${labels}`;
+                    } else {
+                        chip.title = `${unit.nome} — papel: ${ORG_ROLES[unit.role].label.replace('*', '')}`;
+                    }
                 } else {
                     chip.title = unit.nome;
                 }
@@ -299,7 +307,8 @@
         root.querySelectorAll('.orgmap-unit').forEach((chip) => {
             chip.classList.remove('match', 'dim');
             if (next) {
-                chip.classList.add(chip.dataset.role === next ? 'match' : 'dim');
+                const matches = chip.dataset.role === next || chip.dataset.role2 === next;
+                chip.classList.add(matches ? 'match' : 'dim');
             }
         });
     }
