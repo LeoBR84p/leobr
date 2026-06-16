@@ -2,9 +2,12 @@
 /*
  * Gera DECOI-apresentacao.pdf a partir da versao web interativa (index.html).
  *
- * Renderiza cada slide num navegador headless (Chromium via puppeteer),
- * congela animacoes/videos, captura cada slide em 16:9 e monta um PDF
- * com uma pagina por slide.
+ * Navega pela apresentacao usando a propria mecanica de slides (setas),
+ * de modo que cada slide atinja seu estado visivel real, captura cada
+ * slide em 16:9 e monta um PDF com uma pagina por slide.
+ *
+ * Os slides com video recebem um placeholder no lugar do video, pois o
+ * Chromium headless nao decodifica o frame e o PDF e estatico.
  *
  * Uso:
  *   npm install puppeteer
@@ -18,6 +21,10 @@ const REPO = path.resolve(__dirname, '..');
 const OUT = path.join(REPO, 'DECOI-apresentacao.pdf');
 const TOTAL = 15;
 const W = 1280, H = 720, SCALE = 2;
+const SETTLE = 3500; // tempo para a transicao + animacoes de entrada assentarem
+                     // (o maior delay de animacao chega a ~3.3s nos slides Norma.AI)
+
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 (async () => {
   const browser = await puppeteer.launch({
@@ -28,37 +35,48 @@ const W = 1280, H = 720, SCALE = 2;
   await page.setViewport({ width: W, height: H, deviceScaleFactor: SCALE });
   await page.goto('file://' + path.join(REPO, 'index.html'), { waitUntil: 'networkidle0', timeout: 120000 });
 
-  // Esconde a UI de navegacao + particulas e congela transicoes.
+  // Esconde apenas a UI de navegacao e as particulas (sem mexer nas animacoes
+  // de conteudo, que serao acionadas pela navegacao real).
   await page.addStyleTag({ content: `
     #nav-controls, #btn-overview, #progress-bar, #slide-counter, #gold-particles { display: none !important; }
-    *, *::before, *::after { transition: none !important; animation: none !important; }
-    .slide .kw, .slide .orgmap-dir, .slide .orgmap-unit, .slide .orgmap-legend,
-    .slide .orgmap-top, .slide .slide__content, .slide [data-delay] {
-      opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important;
+    .pdf-video-placeholder {
+      position: absolute; inset: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      background: #0e1217; color: #d4b06a;
+      font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: .02em;
+      padding: 24px;
     }
   `});
 
+  // Substitui cada <video> por um placeholder com a mensagem indicada.
+  await page.evaluate(() => {
+    document.querySelectorAll('video').forEach((v) => {
+      const wrap = v.closest('.norma-ai__video-wrap') || v.parentElement;
+      if (getComputedStyle(wrap).position === 'static') wrap.style.position = 'relative';
+      v.muted = true;
+      v.style.visibility = 'hidden';
+      const ph = document.createElement('div');
+      ph.className = 'pdf-video-placeholder';
+      ph.textContent = '<vídeo não disponível nessa versão>';
+      wrap.appendChild(ph);
+    });
+  });
+
+  await page.evaluateHandle('document.fonts.ready');
+  await sleep(SETTLE); // deixa o slide 1 assentar
+
+  const waitImages = () => page.evaluate(async () => {
+    const imgs = [...document.images].filter(i => !i.complete);
+    await Promise.all(imgs.map(i => new Promise(r => { i.onload = i.onerror = r; })));
+  });
+
   const shots = [];
   for (let n = 1; n <= TOTAL; n++) {
-    await page.evaluate((target) => {
-      document.querySelectorAll('.slide').forEach((s, i) => {
-        const on = (i + 1) === target;
-        s.classList.toggle('active', on);
-        s.classList.remove('exit-left', 'exit-right');
-        s.style.opacity = on ? '1' : '';
-        s.style.transform = 'none';
-        s.style.filter = 'none';
-        s.style.visibility = on ? 'visible' : '';
-      });
-    }, n);
-
-    await page.evaluate(async () => {
-      document.querySelectorAll('video').forEach(v => { try { v.pause(); v.currentTime = 0.1; } catch (e) {} });
-      const imgs = [...document.images].filter(i => !i.complete);
-      await Promise.all(imgs.map(i => new Promise(r => { i.onload = i.onerror = r; })));
-    });
-    await new Promise(r => setTimeout(r, 600));
-
+    if (n > 1) {
+      await page.keyboard.press('ArrowRight'); // navega para o proximo slide
+      await sleep(SETTLE);
+    }
+    await waitImages();
     const file = path.join(REPO, `.slide-${String(n).padStart(2, '0')}.png`);
     await page.screenshot({ path: file, clip: { x: 0, y: 0, width: W, height: H } });
     shots.push(file);
